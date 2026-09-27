@@ -240,9 +240,9 @@
     --p:0%;
     position:relative;
     display:grid;
-    grid-template-columns:2.1rem 1fr;
+    grid-template-columns:3.5rem 1fr;
     align-items:start;
-    gap:0 0.85rem;
+    gap:0 0.95rem;
     padding:1.05rem 0.9rem 1.05rem 0.3rem;
     border-bottom:1px solid var(--rule-soft);
     transition:background .28s ease, box-shadow .28s ease;
@@ -262,16 +262,27 @@
     box-shadow:0 1px 0 var(--rule), 0 6px 22px -14px var(--shadow);
   }
 
-  .num{
+  .thumb{
+    width:3.5rem;
+    height:3.5rem;
+    margin-top:0.2rem;
+    border-radius:3px;
+    overflow:hidden;
+    border:1px solid var(--rule);
+    background:var(--leaf-raised);
+    display:grid;
+    place-items:center;
+    transition:border-color .25s ease;
+  }
+  .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .thumb .n{
     font-family:'EB Garamond', Georgia, serif;
-    font-size:1.02rem;
+    font-size:1.1rem;
     font-variant-numeric:tabular-nums;
     color:var(--ink-faint);
-    text-align:right;
-    padding-top:0.42rem;
-    letter-spacing:0.01em;
   }
-  .entry.is-live .num{ color:var(--gold); }
+  .entry.is-live .thumb{ border-color:var(--gold); }
+  .entry.is-live .thumb .n{ color:var(--gold); }
 
   .body{ min-width:0; display:flex; flex-direction:column; gap:0.6rem; }
   .row{ display:flex; align-items:center; gap:0.8rem; }
@@ -516,7 +527,8 @@
 
   @media (max-width:420px){
     .bar-time{ display:none; }
-    .entry{ grid-template-columns:1.7rem 1fr; gap:0 0.65rem; padding-right:0.2rem; }
+    .entry{ grid-template-columns:2.9rem 1fr; gap:0 0.75rem; padding-right:0.2rem; }
+    .thumb{ width:2.9rem; height:2.9rem; }
     .index ol{ gap:0.35rem 1.1rem; }
   }
 
@@ -567,11 +579,11 @@
   <section class="part" id="testimonies">
     <div class="part-head">
       <h2>Testimonies</h2>
-      <span class="count">Two songs · My story of what God has done</span>
+      <span class="count">My story of what God has done</span>
     </div>
 
     <article class="entry" data-src="music/hes-got-me.mp3" data-title="He's Got Me">
-      <span class="num" aria-hidden="true">1</span>
+      <span class="thumb"><img src="art/hes-got-me.webp" width="1536" height="1024" loading="lazy" alt="Artwork for He's Got Me"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He's Got Me</h3><p class="meta">Written June 9, 2026</p></div>
@@ -647,7 +659,7 @@
     </article>
 
     <article class="entry" data-src="music/my-best-chapter-is-still-ahead.mp3" data-title="My Best Chapter Is Still Ahead">
-      <span class="num" aria-hidden="true">2</span>
+      <span class="thumb" aria-hidden="true"><span class="n">2</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>My Best Chapter Is Still Ahead</h3></div>
@@ -668,11 +680,11 @@
   <section class="part" id="praise">
     <div class="part-head">
       <h2>Praise, Prayer &amp; Worship</h2>
-      <span class="count">Two songs · Praise, and prayers set to music</span>
+      <span class="count">Praise, and prayers set to music</span>
     </div>
 
     <article class="entry" data-src="music/all-i-have-to-do-is-ask.mp3" data-title="All I Have to Do Is Ask">
-      <span class="num" aria-hidden="true">3</span>
+      <span class="thumb" aria-hidden="true"><span class="n">3</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>All I Have to Do Is Ask</h3></div>
@@ -690,7 +702,7 @@
     </article>
 
     <article class="entry" data-src="music/he-promised.mp3" data-title="He Promised">
-      <span class="num" aria-hidden="true">4</span>
+      <span class="thumb" aria-hidden="true"><span class="n">4</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He Promised</h3></div>
@@ -711,11 +723,11 @@
   <section class="part" id="family">
     <div class="part-head">
       <h2>Family</h2>
-      <span class="count">Three songs · For the ones I love</span>
+      <span class="count">For the ones I love</span>
     </div>
 
     <article class="entry" data-src="music/geraldine-our-tough-ole-bird.mp3" data-title="Geraldine, Our Tough Ole Bird">
-      <span class="num" aria-hidden="true">5</span>
+      <span class="thumb" aria-hidden="true"><span class="n">5</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Geraldine, Our Tough Ole Bird</h3></div>
@@ -733,7 +745,7 @@
     </article>
 
     <article class="entry" data-src="music/room-for-one-more.mp3" data-title="Room for One More">
-      <span class="num" aria-hidden="true">6</span>
+      <span class="thumb" aria-hidden="true"><span class="n">6</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Room for One More</h3></div>
@@ -751,7 +763,7 @@
     </article>
 
     <article class="entry" data-src="music/the-king-beside-his-queen.mp3" data-title="The King Beside His Queen">
-      <span class="num" aria-hidden="true">7</span>
+      <span class="thumb" aria-hidden="true"><span class="n">7</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>The King Beside His Queen</h3></div>
@@ -772,11 +784,11 @@
   <section class="part" id="love">
     <div class="part-head">
       <h2>Love</h2>
-      <span class="count">One song · Written for a wedding day</span>
+      <span class="count">Written for a wedding day</span>
     </div>
 
     <article class="entry" data-src="music/here-comes-your-bride.mp3" data-title="Here Comes Your Bride">
-      <span class="num" aria-hidden="true">8</span>
+      <span class="thumb"><img src="art/here-comes-your-bride.webp" width="1536" height="1024" loading="lazy" alt="Artwork for Here Comes Your Bride"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Here Comes Your Bride</h3><p class="meta">Written June 7, 2026</p></div>
@@ -852,11 +864,11 @@
   <section class="part" id="friends">
     <div class="part-head">
       <h2>Friends</h2>
-      <span class="count">One song · For the friends God gave me</span>
+      <span class="count">For the friends God gave me</span>
     </div>
 
     <article class="entry" data-src="music/gifted-golfing-az.mp3" data-title="Gifted Golfing AZ">
-      <span class="num" aria-hidden="true">9</span>
+      <span class="thumb" aria-hidden="true"><span class="n">9</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Gifted Golfing AZ</h3></div>
@@ -877,11 +889,11 @@
   <section class="part" id="real-estate">
     <div class="part-head">
       <h2>Real Estate</h2>
-      <span class="count">Three songs · From my days selling houses in Ocala</span>
+      <span class="count">From my days selling houses in Ocala</span>
     </div>
 
     <article class="entry" data-src="music/sold-by-sheri.mp3" data-title="Sold by Sheri">
-      <span class="num" aria-hidden="true">10</span>
+      <span class="thumb" aria-hidden="true"><span class="n">10</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Sold by Sheri</h3></div>
@@ -899,7 +911,7 @@
     </article>
 
     <article class="entry" data-src="music/horse-capital-of-the-world.mp3" data-title="Horse Capital of the World">
-      <span class="num" aria-hidden="true">11</span>
+      <span class="thumb" aria-hidden="true"><span class="n">11</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Horse Capital of the World</h3></div>
@@ -917,7 +929,7 @@
     </article>
 
     <article class="entry" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street">
-      <span class="num" aria-hidden="true">12</span>
+      <span class="thumb" aria-hidden="true"><span class="n">12</span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>1774 NE 12th Street</h3></div>
