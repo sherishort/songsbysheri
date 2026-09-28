@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Song Stats — Songs by Sheri</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Karla:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --leaf:#f6f1e4; --raised:#fffdf7; --ink:#16201f; --soft:#4b5a58; --faint:#8b9895;
+    --gold:#a8821b; --heart:#c0392b; --rule:rgba(11,53,56,0.16); --rule-soft:rgba(11,53,56,0.09);
+    color-scheme:light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --leaf:#0e1c1d; --raised:#16292a; --ink:#ece5d3; --soft:#a8b5b2; --faint:#6d7d7a;
+      --gold:#d8b449; --heart:#e06b5f; --rule:rgba(233,226,207,0.16); --rule-soft:rgba(233,226,207,0.08);
+    }
+  }
+  :root[data-theme="dark"]{
+    --leaf:#0e1c1d; --raised:#16292a; --ink:#ece5d3; --soft:#a8b5b2; --faint:#6d7d7a;
+    --gold:#d8b449; --heart:#e06b5f; --rule:rgba(233,226,207,0.16); --rule-soft:rgba(233,226,207,0.08);
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--leaf); color:var(--ink); font-family:'Karla', system-ui, sans-serif; }
+  main{ max-width:40rem; margin:0 auto; padding:2.2rem 1rem 3rem; }
+  h1{ font-family:'EB Garamond', Georgia, serif; font-weight:500; font-size:2rem; margin:0 0 0.2rem; }
+  .sub{ color:var(--soft); margin:0 0 1.6rem; font-size:0.95rem; }
+  .totals{ display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:2rem; }
+  .tile{ background:var(--raised); border:1px solid var(--rule); border-radius:6px; padding:0.9rem 1rem; }
+  .tile .n{ font-family:'EB Garamond', Georgia, serif; font-size:2.2rem; line-height:1; font-variant-numeric:tabular-nums; }
+  .tile .l{ font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint); margin-top:0.35rem; }
+  .tile.hearts .n{ color:var(--heart); }
+  .sort{ display:flex; gap:0.5rem; align-items:center; margin-bottom:0.6rem; font-size:0.85rem; color:var(--faint); flex-wrap:wrap; }
+  .sort button{ font:inherit; color:var(--soft); background:transparent; border:1px solid var(--rule); border-radius:99px; padding:0.25rem 0.75rem; cursor:pointer; }
+  .sort button[aria-pressed="true"]{ color:var(--leaf); background:var(--gold); border-color:var(--gold); }
+  table{ width:100%; border-collapse:collapse; }
+  th{ text-align:left; font-weight:500; font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--faint); padding:0.5rem 0.3rem; border-bottom:1px solid var(--rule); }
+  th.num, td.num{ text-align:right; width:4.2rem; font-variant-numeric:tabular-nums; }
+  td{ padding:0.7rem 0.3rem; border-bottom:1px solid var(--rule-soft); vertical-align:top; }
+  td .t{ font-family:'EB Garamond', Georgia, serif; font-size:1.1rem; }
+  td .s{ font-size:0.75rem; color:var(--faint); }
+  td.num{ font-size:1.05rem; }
+  td.num.h{ color:var(--heart); }
+  td.num.zero{ color:var(--faint); }
+  .msg{ background:var(--raised); border:1px solid var(--rule); border-radius:6px; padding:1rem; color:var(--soft); line-height:1.5; }
+  .note{ margin-top:1.6rem; font-size:0.82rem; color:var(--faint); line-height:1.5; }
+  a{ color:var(--gold); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Song Stats</h1>
+  <p class="sub">Only you can see this page. <a href="/">Back to the songs</a></p>
+  <div id="out"><p class="msg">Loading…</p></div>
+  <p class="note">A play counts when someone starts a song, once per song per visit. Hearts go down if someone takes theirs back. Your own plays and hearts on this device aren't counted.</p>
+</main>
+<script>
+(function(){
+  var out = document.getElementById('out');
+  var store = {
+    get: function(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set: function(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  };
+
+  // The secret arrives once in the link (#key=...) and is remembered on this device.
+  var m = location.hash.match(/key=([^&]+)/);
+  if (m){
+    store.set('sbs-stats-key', decodeURIComponent(m[1]));
+    history.replaceState(null, '', location.pathname);
+  }
+  var key = store.get('sbs-stats-key');
+  if (!key){
+    out.innerHTML = '<p class="msg">Open this page with your private stats link to see your numbers.</p>';
+    return;
+  }
+  store.set('sbs-owner', '1');   // don't count Sheri's own listening
+
+  var esc = function(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); };
+
+  Promise.all([
+    fetch('/api/stats', { headers: { 'x-stats-key': key }, cache: 'no-store' }).then(function(r){
+      if (r.status === 404) throw new Error('key');
+      if (!r.ok) throw new Error('down');
+      return r.json();
+    }),
+    fetch('/', { cache: 'no-store' }).then(function(r){ return r.text(); })
+  ]).then(function(res){
+    var counts = res[0];
+    var doc = new DOMParser().parseFromString(res[1], 'text/html');
+    var rows = [].map.call(doc.querySelectorAll('.entry[id]'), function(el){
+      var part = el.closest('.part');
+      var h = part && part.querySelector('h2');
+      var c = counts[el.id] || {};
+      return { id: el.id, title: el.dataset.title, section: h ? h.textContent : '', plays: c.plays || 0, hearts: c.hearts || 0 };
+    });
+    var order = rows.map(function(r){ return r.id; });
+    var totalPlays = rows.reduce(function(a, r){ return a + r.plays; }, 0);
+    var totalHearts = rows.reduce(function(a, r){ return a + r.hearts; }, 0);
+
+    var sortBy = 'plays';
+    var render = function(){
+      var sorted = rows.slice().sort(function(a, b){
+        if (sortBy === 'site') return order.indexOf(a.id) - order.indexOf(b.id);
+        return (b[sortBy] - a[sortBy]) || (order.indexOf(a.id) - order.indexOf(b.id));
+      });
+      var btn = function(v, label){ return '<button type="button" data-sort="' + v + '" aria-pressed="' + (sortBy === v) + '">' + label + '</button>'; };
+      out.innerHTML =
+        '<div class="totals">' +
+          '<div class="tile"><div class="n">' + totalPlays + '</div><div class="l">Plays</div></div>' +
+          '<div class="tile hearts"><div class="n">' + totalHearts + '</div><div class="l">Hearts</div></div>' +
+        '</div>' +
+        '<div class="sort">Sort by ' + btn('plays', 'Most played') + btn('hearts', 'Most loved') + btn('site', 'Site order') + '</div>' +
+        '<table><thead><tr><th>Song</th><th class="num">Plays</th><th class="num">♥</th></tr></thead><tbody>' +
+        sorted.map(function(r){
+          return '<tr><td><div class="t">' + esc(r.title) + '</div><div class="s">' + esc(r.section) + '</div></td>' +
+            '<td class="num' + (r.plays ? '' : ' zero') + '">' + r.plays + '</td>' +
+            '<td class="num h' + (r.hearts ? '' : ' zero') + '">' + r.hearts + '</td></tr>';
+        }).join('') +
+        '</tbody></table>';
+      [].forEach.call(out.querySelectorAll('[data-sort]'), function(b){
+        b.addEventListener('click', function(){ sortBy = b.dataset.sort; render(); });
+      });
+    };
+    render();
+  }).catch(function(err){
+    out.innerHTML = err.message === 'key'
+      ? '<p class="msg">That stats link isn\'t right. Open the private link Claude gave you again.</p>'
+      : '<p class="msg">Couldn\'t load the numbers just now. Try again in a minute.</p>';
+  });
+})();
+</script>
+</body>
+</html>

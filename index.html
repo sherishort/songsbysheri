@@ -319,6 +319,29 @@
   .entry.is-playing .play .ic-play{ display:none; }
   .entry.is-playing .play .ic-pause{ display:block; }
 
+  .heart{
+    flex:none;
+    width:2.1rem; height:2.1rem;
+    border-radius:50%;
+    border:1px solid var(--rule);
+    background:transparent;
+    color:var(--ink-faint);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    padding:0;
+    transition:color .18s ease, border-color .18s ease, transform .12s ease;
+  }
+  .heart svg{ width:15px; height:15px; display:block; fill:none; }
+  .heart:hover{ color:#c0392b; border-color:#c0392b; }
+  .heart:active{ transform:scale(0.9); }
+  .heart:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .heart[aria-pressed="true"]{ color:#c0392b; border-color:#c0392b; }
+  .heart[aria-pressed="true"] svg{ fill:currentColor; }
+  .heart.pop svg{ animation:heartpop .32s ease; }
+  @keyframes heartpop{ 50%{ transform:scale(1.3); } }
+  @media (prefers-reduced-motion: reduce){ .heart.pop svg{ animation:none; } }
+  .row{ gap:0.55rem; }
   .share{
     flex:none;
     width:2.1rem; height:2.1rem;
@@ -643,6 +666,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Look to the Father</h3><p class="meta">Written 2003 · Music added January 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Look to the Father">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Look to the Father">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -717,6 +743,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He's Got Me</h3><p class="meta">Written June 9, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love He's Got Me">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share He's Got Me">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -796,6 +825,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>My Best Chapter Is Still Ahead</h3><p class="meta">Written August 2, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love My Best Chapter Is Still Ahead">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share My Best Chapter Is Still Ahead">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -879,6 +911,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>When I Don't Know What to Do</h3><p class="meta">James 1:5 · Written May 17, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love When I Don't Know What to Do">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share When I Don't Know What to Do">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -958,6 +993,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He Promised</h3><p class="meta">Written June 11, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love He Promised">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share He Promised">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1024,6 +1062,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Jehovah Nissi (Banner Over Me)</h3><p class="meta">Exodus 17:15 · Written August 25, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Jehovah Nissi (Banner Over Me)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Jehovah Nissi (Banner Over Me)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1090,6 +1131,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>You&rsquo;ve Got My Future in Your Hands</h3><p class="meta">Jeremiah 29:11 · Written January 22, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love You've Got My Future in Your Hands">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share You've Got My Future in Your Hands">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1160,6 +1204,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>All Things (Unwavering Faith)</h3><p class="meta">Romans 8:28 · Key of G · Written January 21, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love All Things (Unwavering Faith)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share All Things (Unwavering Faith)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1234,6 +1281,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>You Can&rsquo;t Burn Down a Church That Lives in Our Hearts</h3><p class="meta">First Baptist Ocala · Written January 27, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love You Can't Burn Down a Church That Lives in Our Hearts">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share You Can't Burn Down a Church That Lives in Our Hearts">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1310,6 +1360,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>RUN, Don&rsquo;t Walk (Flee to Jesus)</h3><p class="meta">Written February 24, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love RUN, Don't Walk (Flee to Jesus)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share RUN, Don't Walk (Flee to Jesus)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1394,6 +1447,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>With Love, I Let Go</h3><p class="meta">Written January 18, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love With Love, I Let Go">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share With Love, I Let Go">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1464,6 +1520,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>God Stepped In</h3><p class="meta">Sequel to &ldquo;With Love, I Let Go&rdquo; · Written April 25, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love God Stepped In">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share God Stepped In">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1544,6 +1603,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Everybody Loved Dutton</h3><p class="meta">Written January 23, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Everybody Loved Dutton">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Everybody Loved Dutton">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1643,6 +1705,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Mama&rsquo;s Song</h3><p class="meta">Written February 16, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Mama's Song">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Mama's Song">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1719,6 +1784,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Geraldine (Our Tough Old Bird)</h3><p class="meta">Written May 9, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Geraldine (Our Tough Old Bird)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Geraldine (Our Tough Old Bird)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1806,6 +1874,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Room for One More</h3><p class="meta">A Song for Aunt Betty · Written September 5, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Room for One More">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Room for One More">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1877,6 +1948,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>I&rsquo;ve Got a Six Pack!</h3><p class="meta">For my six grandchildren · Written January 19, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love I've Got a Six Pack!">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share I've Got a Six Pack!">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -1932,6 +2006,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Hangin&rsquo; with My Grammy</h3><p class="meta">Written for Khloe · March 22, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Hangin' with My Grammy">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Hangin' with My Grammy">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2013,6 +2090,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Ethan&rsquo;s Song (One One)</h3><p class="meta">For Ethan&rsquo;s 18th birthday</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Ethan's Song (One One)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Ethan's Song (One One)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2079,6 +2159,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Brady Is the Best</h3><p class="meta">For Brady · Written March 17, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Brady Is the Best">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Brady Is the Best">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2140,6 +2223,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>The King Beside His Queen</h3><p class="meta">A Song for Phil · Written September 5, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love The King Beside His Queen">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share The King Beside His Queen">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2214,6 +2300,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Two Little Souls</h3><p class="meta">A duet · Written April 10, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Two Little Souls">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Two Little Souls">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2296,6 +2385,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Gifted Golf AZ</h3><p class="meta">Written for Harold · August 29, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Gifted Golf AZ">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Gifted Golf AZ">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2378,6 +2470,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Haul Ass, Debbie!</h3><p class="meta">Written May 3, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Haul Ass, Debbie!">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Haul Ass, Debbie!">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2468,6 +2563,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Lana&rsquo;s Song</h3><p class="meta">Written April 13, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Lana's Song">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Lana's Song">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2539,6 +2637,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Hey Sisi</h3><p class="meta">Happy 64th Birthday · Written February 11, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Hey Sisi">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Hey Sisi">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2618,6 +2719,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Toby (The Waddle-Wag Song)</h3><p class="meta">Written January 21, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Toby (The Waddle-Wag Song)">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Toby (The Waddle-Wag Song)">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2696,6 +2800,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He'll Lead Me to You</h3><p class="meta">Written April 5, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love He&apos;ll Lead Me to You">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share He&apos;ll Lead Me to You">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2769,6 +2876,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Here Comes Your Bride</h3><p class="meta">Written June 7, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Here Comes Your Bride">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Here Comes Your Bride">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2852,6 +2962,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Sold by Sheri</h3><p class="meta">Written September 22, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Sold by Sheri">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Sold by Sheri">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2902,6 +3015,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Falbo Gets It Done</h3><p class="meta">Written September 22, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Falbo Gets It Done">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Falbo Gets It Done">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -2952,6 +3068,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Horse Capital of the World</h3><p class="meta">Written August 25, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love Horse Capital of the World">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share Horse Capital of the World">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -3006,6 +3125,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>1774 NE 12th Street</h3><p class="meta">Written September 23, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love 1774 NE 12th Street">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share 1774 NE 12th Street">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -3054,6 +3176,9 @@
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>The Teapot Who Wanted to Fly</h3><p class="meta">Written August 31, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love The Teapot Who Wanted to Fly">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
           <button class="share" type="button" aria-label="Share The Teapot Who Wanted to Fly">
             <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
           </button>
@@ -3292,6 +3417,56 @@
     t.seek.addEventListener('keyup', commit);
 
     return t;
+  });
+
+  // Private counts: plays and hearts go to /api/count; nobody but Sheri sees them.
+  // Her own devices are marked by the stats page so her listening isn't counted.
+  var store = {
+    get: function(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set: function(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  };
+  var isOwner = store.get('sbs-owner') === '1';
+  var record = function(song, type){
+    if (isOwner || location.protocol === 'file:') return;
+    try {
+      fetch('/api/count', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ song: song, type: type }),
+        keepalive: true
+      }).catch(function(){});
+    } catch(e){}
+  };
+
+  var played = {};
+  tracks.forEach(function(t){
+    t.audio.addEventListener('play', function(){
+      if (played[t.el.id]) return;
+      played[t.el.id] = true;
+      record(t.el.id, 'play');
+    });
+  });
+
+  var hearts = {};
+  try { hearts = JSON.parse(store.get('sbs-hearts') || '{}') || {}; } catch(e){ hearts = {}; }
+  [].forEach.call(document.querySelectorAll('.entry'), function(el){
+    var btn = el.querySelector('.heart');
+    if (!btn) return;
+    var title = el.dataset.title;
+    var show = function(on){
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', (on ? 'You love ' : 'Love ') + title);
+    };
+    show(!!hearts[el.id]);
+    btn.addEventListener('click', function(){
+      var on = !hearts[el.id];
+      if (on) hearts[el.id] = 1; else delete hearts[el.id];
+      store.set('sbs-hearts', JSON.stringify(hearts));
+      show(on);
+      btn.classList.remove('pop');
+      if (on){ void btn.offsetWidth; btn.classList.add('pop'); }
+      record(el.id, on ? 'heart' : 'unheart');
+    });
   });
 
   // Share: the phone's share sheet where there is one, otherwise copy the link.
