@@ -47,6 +47,19 @@
   td.num{ font-size:1.05rem; }
   td.num.h{ color:var(--heart); }
   td.num.zero{ color:var(--faint); }
+  .mod{ margin-bottom:2rem; }
+  .mod h2{ font-family:'EB Garamond', Georgia, serif; font-weight:500; font-size:1.35rem; margin:0 0 0.7rem; }
+  .mod h2 .badge{ display:inline-block; min-width:1.5rem; padding:0 0.45rem; margin-left:0.3rem; border-radius:99px; background:var(--heart); color:#fff; font-family:'Karla', system-ui, sans-serif; font-size:0.85rem; line-height:1.5rem; text-align:center; vertical-align:middle; }
+  .card{ background:var(--raised); border:1px solid var(--rule); border-radius:6px; padding:0.9rem 1rem; margin-bottom:0.7rem; }
+  .card .song{ font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); }
+  .card .text{ font-family:'EB Garamond', Georgia, serif; font-size:1.1rem; line-height:1.5; margin:0.35rem 0; white-space:pre-line; overflow-wrap:anywhere; }
+  .card .who{ font-size:0.8rem; color:var(--faint); }
+  .card .acts{ display:flex; gap:0.5rem; margin-top:0.7rem; }
+  .card button{ font:inherit; font-size:0.85rem; font-weight:600; border-radius:99px; padding:0.4rem 1rem; cursor:pointer; border:1px solid var(--rule); background:transparent; color:var(--soft); }
+  .card button.ok{ background:var(--gold); border-color:var(--gold); color:var(--leaf); }
+  .card button:disabled{ opacity:0.5; cursor:default; }
+  .empty{ color:var(--faint); font-size:0.92rem; margin:0; }
+  details.posted summary{ cursor:pointer; color:var(--soft); font-size:0.92rem; margin:0.4rem 0 0.8rem; }
   .msg{ background:var(--raised); border:1px solid var(--rule); border-radius:6px; padding:1rem; color:var(--soft); line-height:1.5; }
   .note{ margin-top:1.6rem; font-size:0.82rem; color:var(--faint); line-height:1.5; }
   a{ color:var(--gold); }
@@ -88,9 +101,13 @@
       if (!r.ok) throw new Error('down');
       return r.json();
     }),
-    fetch('/', { cache: 'no-store' }).then(function(r){ return r.text(); })
+    fetch('/', { cache: 'no-store' }).then(function(r){ return r.text(); }),
+    fetch('/api/moderate', { headers: { 'x-stats-key': key }, cache: 'no-store' }).then(function(r){
+      return r.ok ? r.json() : { pending: [], approved: [] };
+    })
   ]).then(function(res){
     var counts = res[0];
+    var comments = res[2];
     var doc = new DOMParser().parseFromString(res[1], 'text/html');
     var rows = [].map.call(doc.querySelectorAll('.entry[id]'), function(el){
       var part = el.closest('.part');
@@ -102,6 +119,30 @@
     var totalPlays = rows.reduce(function(a, r){ return a + r.plays; }, 0);
     var totalHearts = rows.reduce(function(a, r){ return a + r.hearts; }, 0);
 
+    var titles = {};
+    rows.forEach(function(r){ titles[r.id] = r.title; });
+    var when = function(iso){
+      try { return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+      catch(e){ return ''; }
+    };
+    var card = function(c, pending){
+      return '<div class="card" data-id="' + esc(c.id) + '">' +
+        '<div class="song">' + esc(titles[c.song] || c.song) + '</div>' +
+        '<p class="text">' + esc(c.message) + '</p>' +
+        '<div class="who">\u2014 ' + esc(c.name) + ' \u00b7 ' + esc(when(c.created)) + '</div>' +
+        '<div class="acts">' +
+          (pending ? '<button type="button" class="ok" data-act="approve">Approve</button><button type="button" data-act="delete">Delete</button>'
+                   : '<button type="button" data-act="delete">Remove from site</button>') +
+        '</div></div>';
+    };
+    var modHtml = function(){
+      var p = comments.pending, a = comments.approved;
+      return '<section class="mod"><h2>Kind words waiting for you' + (p.length ? '<span class="badge">' + p.length + '</span>' : '') + '</h2>' +
+        (p.length ? p.map(function(c){ return card(c, true); }).join('') : '<p class="empty">Nothing waiting right now.</p>') +
+        (a.length ? '<details class="posted"><summary>On your site now (' + a.length + ')</summary>' + a.map(function(c){ return card(c, false); }).join('') + '</details>' : '') +
+        '</section>';
+    };
+
     var sortBy = 'plays';
     var render = function(){
       var sorted = rows.slice().sort(function(a, b){
@@ -109,7 +150,7 @@
         return (b[sortBy] - a[sortBy]) || (order.indexOf(a.id) - order.indexOf(b.id));
       });
       var btn = function(v, label){ return '<button type="button" data-sort="' + v + '" aria-pressed="' + (sortBy === v) + '">' + label + '</button>'; };
-      out.innerHTML =
+      out.innerHTML = modHtml() +
         '<div class="totals">' +
           '<div class="tile"><div class="n">' + totalPlays + '</div><div class="l">Plays</div></div>' +
           '<div class="tile hearts"><div class="n">' + totalHearts + '</div><div class="l">Hearts</div></div>' +
@@ -122,6 +163,29 @@
             '<td class="num h' + (r.hearts ? '' : ' zero') + '">' + r.hearts + '</td></tr>';
         }).join('') +
         '</tbody></table>';
+      [].forEach.call(out.querySelectorAll('[data-act]'), function(b){
+        b.addEventListener('click', function(){
+          var cardEl = b.closest('.card'), id = cardEl.dataset.id, act = b.dataset.act;
+          if (act === 'delete' && !confirm('Delete this kind word? This can\u2019t be undone.')) return;
+          [].forEach.call(cardEl.querySelectorAll('button'), function(x){ x.disabled = true; });
+          fetch('/api/moderate', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', 'x-stats-key': key },
+            body: JSON.stringify({ action: act, id: id })
+          }).then(function(r){
+            if (!r.ok) throw new Error();
+            var find = function(list){ return list.filter(function(c){ return c.id === id; })[0]; };
+            var c = find(comments.pending) || find(comments.approved);
+            comments.pending = comments.pending.filter(function(x){ return x.id !== id; });
+            comments.approved = comments.approved.filter(function(x){ return x.id !== id; });
+            if (act === 'approve' && c) comments.approved.unshift(c);
+            render();
+          }).catch(function(){
+            [].forEach.call(cardEl.querySelectorAll('button'), function(x){ x.disabled = false; });
+            alert('That didn\u2019t go through. Please try again.');
+          });
+        });
+      });
       [].forEach.call(out.querySelectorAll('[data-sort]'), function(b){
         b.addEventListener('click', function(){ sortBy = b.dataset.sort; render(); });
       });

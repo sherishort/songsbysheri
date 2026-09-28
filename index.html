@@ -430,6 +430,35 @@
   input[type="range"].seek:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; border-radius:2px; }
 
 
+  /* ── Kind words (comments, approved by Sheri first) ────── */
+  .kind .sheet-body{ gap:1rem; }
+  .kind-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:0.9rem; }
+  .kind-list li{ border-left:2px solid var(--gold-stamp); padding:0.1rem 0 0.1rem 0.8rem; }
+  .kind-list .msg{ font-family:'EB Garamond', Georgia, serif; font-size:1.06rem; line-height:1.55; color:var(--ink); white-space:pre-line; overflow-wrap:anywhere; }
+  .kind-list .who{ font-size:0.76rem; letter-spacing:0.03em; color:var(--ink-faint); margin-top:0.2rem; }
+  .kind-form{ display:flex; flex-direction:column; gap:0.55rem; }
+  .kind-form label{ font-size:0.74rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-faint); }
+  .kind-form input, .kind-form textarea{
+    font:inherit; font-size:1rem; color:var(--ink);
+    background:var(--leaf-raised);
+    border:1px solid var(--rule); border-radius:4px;
+    padding:0.55rem 0.65rem; width:100%;
+  }
+  .kind-form textarea{ min-height:5.5rem; resize:vertical; font-family:'EB Garamond', Georgia, serif; font-size:1.06rem; line-height:1.5; }
+  .kind-form input:focus-visible, .kind-form textarea:focus-visible{ outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold); }
+  .kind-form .trap{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  .kind-form .foot{ display:flex; align-items:center; justify-content:space-between; gap:0.8rem; flex-wrap:wrap; }
+  .kind-form .left{ font-size:0.74rem; color:var(--ink-faint); }
+  .kind-form button{
+    font:inherit; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--leaf-raised); background:var(--gold); border:1px solid var(--gold);
+    border-radius:99px; padding:0.5rem 1.1rem; cursor:pointer;
+  }
+  .kind-form button:disabled{ opacity:0.55; cursor:default; }
+  .kind-form button:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .kind-note{ font-size:0.85rem; color:var(--ink-soft); line-height:1.5; }
+  .kind-thanks{ font-family:'EB Garamond', Georgia, serif; font-style:italic; font-size:1.06rem; color:var(--ink-soft); }
+
   /* ── Lyric sheet ───────────────────────────────────────── */
   .sheet{ margin-top:0.1rem; }
   .sheet summary{
@@ -3468,6 +3497,83 @@
       record(el.id, on ? 'heart' : 'unheart');
     });
   });
+
+  // Kind words: approved comments under each song, plus a form. New comments
+  // wait for Sheri's approval on the stats page before anyone sees them.
+  var kindCounter = 0;
+  var fmtDate = function(iso){
+    try { return new Date(iso).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' }); }
+    catch(e){ return ''; }
+  };
+  var kinds = [].map.call(document.querySelectorAll('.entry'), function(el){
+    var n = ++kindCounter;
+    var d = document.createElement('details');
+    d.className = 'sheet kind';
+    d.innerHTML =
+      '<summary>Leave a kind word</summary>' +
+      '<div class="sheet-body">' +
+        '<ul class="kind-list" hidden></ul>' +
+        '<form class="kind-form" novalidate>' +
+          '<label for="kn' + n + '">Your first name</label>' +
+          '<input id="kn' + n + '" name="name" maxlength="40" autocomplete="given-name" required>' +
+          '<label for="km' + n + '">Your kind word</label>' +
+          '<textarea id="km' + n + '" name="message" maxlength="500" required></textarea>' +
+          '<div class="trap" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>' +
+          '<div class="foot"><span class="left">Sheri reads each one before it appears.</span><button type="submit">Send</button></div>' +
+        '</form>' +
+      '</div>';
+    el.querySelector('.body').appendChild(d);
+
+    var summary = d.querySelector('summary');
+    var list = d.querySelector('.kind-list');
+    var form = d.querySelector('form');
+    var btn = form.querySelector('button');
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var f = form.elements;   // form.name would be the form's own name, not the field
+      var name = f['name'].value.trim(), message = f['message'].value.trim();
+      if (!name){ f['name'].focus(); return; }
+      if (!message){ f['message'].focus(); return; }
+      btn.disabled = true; btn.textContent = 'Sending…';
+      fetch('/api/comments', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ song: el.id, name: name, message: message, website: f['website'].value })
+      }).then(function(r){
+        if (!r.ok) throw new Error();
+        var p = document.createElement('p');
+        p.className = 'kind-thanks';
+        p.setAttribute('role', 'status');
+        p.textContent = 'Thank you, ' + name + '! Sheri will read your kind word soon.';
+        form.replaceWith(p);
+      }).catch(function(){
+        btn.disabled = false; btn.textContent = 'Send';
+        var left = form.querySelector('.left');
+        left.textContent = 'That didn\u2019t send. Please try again in a moment.';
+      });
+    });
+
+    return { el: el, summary: summary, list: list };
+  });
+
+  if (location.protocol !== 'file:'){
+    fetch('/api/comments', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).then(function(bySong){
+      kinds.forEach(function(k){
+        var items = bySong[k.el.id] || [];
+        if (!items.length) return;
+        k.summary.textContent = 'Kind words (' + items.length + ')';
+        items.forEach(function(c){
+          var li = document.createElement('li');
+          var m = document.createElement('p'); m.className = 'msg'; m.textContent = c.message;
+          var w = document.createElement('p'); w.className = 'who'; w.textContent = '\u2014 ' + c.name + (c.created ? ', ' + fmtDate(c.created) : '');
+          li.appendChild(m); li.appendChild(w);
+          k.list.appendChild(li);
+        });
+        k.list.hidden = false;
+      });
+    }).catch(function(){});
+  }
 
   // Share: the phone's share sheet where there is one, otherwise copy the link.
   [].forEach.call(document.querySelectorAll('.entry'), function(el){
