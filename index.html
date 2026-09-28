@@ -459,6 +459,12 @@
   .kind-note{ font-size:0.85rem; color:var(--ink-soft); line-height:1.5; }
   .kind-thanks{ font-family:'EB Garamond', Georgia, serif; font-style:italic; font-size:1.06rem; color:var(--ink-soft); }
 
+  /* ── Write to Sheri (private note, straight to her inbox) ─ */
+  .write{ padding-block:0 2.7rem; }
+  .write .part-head{ margin-bottom:1.2rem; }
+  .write .kind-form{ max-width:32rem; }
+  .write .kind-form .left{ max-width:22rem; line-height:1.45; }
+
   /* ── Lyric sheet ───────────────────────────────────────── */
   .sheet{ margin-top:0.1rem; }
   .sheet summary{
@@ -3297,6 +3303,33 @@
     </article>
   </section>
 
+  <section class="write" id="write">
+    <div class="part-head">
+      <h2>Write to Sheri</h2>
+      <span class="count">A private note &mdash; this one comes straight to me and never appears on the site</span>
+    </div>
+
+    <form class="kind-form note-form" name="contact" method="POST" action="/"
+          data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="contact">
+      <div class="trap" aria-hidden="true"><label>Website <input name="bot-field" tabindex="-1" autocomplete="off"></label></div>
+
+      <label for="wf-name">Your name</label>
+      <input id="wf-name" name="name" maxlength="80" autocomplete="name" required>
+
+      <label for="wf-email">Your email</label>
+      <input id="wf-email" name="email" type="email" maxlength="120" autocomplete="email" required>
+
+      <label for="wf-message">Your message</label>
+      <textarea id="wf-message" name="message" maxlength="2000" required></textarea>
+
+      <div class="foot">
+        <span class="left">Only Sheri sees this. If you would rather say something everyone can read, leave a kind word under a song instead.</span>
+        <button type="submit">Send</button>
+      </div>
+    </form>
+  </section>
+
 
 </main>
 
@@ -3616,3 +3649,35 @@
 
 </body>
 </html>
+
+<script>
+(function(){
+  var form = document.querySelector('form.note-form');
+  if (!form) return;
+  var btn  = form.querySelector('button');
+  var left = form.querySelector('.left');
+  var said = left.textContent;
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    btn.disabled = true; btn.textContent = 'Sending';
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    }).then(function(r){
+      if (!r.ok) throw new Error(r.status);
+      var p = document.createElement('p');
+      p.className = 'kind-thanks';
+      p.textContent = 'Thank you \u2014 your message is on its way to Sheri.';
+      form.replaceWith(p);
+    }).catch(function(){
+      btn.disabled = false; btn.textContent = 'Send';
+      left.textContent = 'That didn\u2019t send. Please try again in a moment.';
+      setTimeout(function(){ left.textContent = said; }, 6000);
+    });
+  });
+})();
+</script>
