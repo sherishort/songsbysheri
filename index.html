@@ -319,6 +319,39 @@
   .entry.is-playing .play .ic-play{ display:none; }
   .entry.is-playing .play .ic-pause{ display:block; }
 
+  .share{
+    flex:none;
+    width:2.1rem; height:2.1rem;
+    border-radius:50%;
+    border:1px solid var(--rule);
+    background:transparent;
+    color:var(--ink-faint);
+    display:grid;
+    place-items:center;
+    cursor:pointer;
+    padding:0;
+    position:relative;
+    transition:color .18s ease, border-color .18s ease, transform .12s ease;
+  }
+  .share svg{ width:15px; height:15px; display:block; }
+  .share:hover{ color:var(--gold); border-color:var(--gold); }
+  .share:active{ transform:scale(0.94); }
+  .share:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .share .copied{
+    position:absolute;
+    bottom:calc(100% + 6px); right:-0.4rem;
+    white-space:nowrap;
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    padding:0.25rem 0.55rem;
+    border-radius:3px;
+    background:var(--binding);
+    color:var(--binding-ink);
+    pointer-events:none;
+  }
+  .entry:target{ background:var(--leaf-raised); }
+  .entry{ scroll-margin-top:1rem; }
+
   .scrub{ display:flex; align-items:center; gap:0.7rem; }
   .time{
     font-size:0.78rem;
@@ -605,11 +638,14 @@
       <span class="count">My story of what God has done</span>
     </div>
 
-    <article class="entry" data-src="music/look-to-the-father.mp3" data-title="Look to the Father">
+    <article class="entry" id="look-to-the-father" data-src="music/look-to-the-father.mp3" data-title="Look to the Father">
       <span class="thumb"><img src="art/thumbs/look-to-the-father.jpg" width="240" height="200" loading="lazy" alt="Artwork for Look to the Father"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Look to the Father</h3><p class="meta">Written 2003 · Music added January 2026</p></div>
+          <button class="share" type="button" aria-label="Share Look to the Father">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Look to the Father">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -676,11 +712,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/hes-got-me.mp3" data-title="He's Got Me">
+    <article class="entry" id="hes-got-me" data-src="music/hes-got-me.mp3" data-title="He's Got Me">
       <span class="thumb"><img src="art/thumbs/hes-got-me.jpg" width="240" height="160" loading="lazy" alt="Artwork for He's Got Me"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He's Got Me</h3><p class="meta">Written June 9, 2026</p></div>
+          <button class="share" type="button" aria-label="Share He's Got Me">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play He's Got Me">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -752,11 +791,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/my-best-chapter-is-still-ahead.mp3" data-title="My Best Chapter Is Still Ahead">
+    <article class="entry" id="my-best-chapter-is-still-ahead" data-src="music/my-best-chapter-is-still-ahead.mp3" data-title="My Best Chapter Is Still Ahead">
       <span class="thumb"><img src="art/thumbs/my-best-chapter-is-still-ahead.jpg" width="240" height="240" loading="lazy" alt="Artwork for My Best Chapter Is Still Ahead"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>My Best Chapter Is Still Ahead</h3><p class="meta">Written August 2, 2026</p></div>
+          <button class="share" type="button" aria-label="Share My Best Chapter Is Still Ahead">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play My Best Chapter Is Still Ahead">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -832,11 +874,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/all-i-have-to-do-is-ask.mp3" data-title="When I Don't Know What to Do">
+    <article class="entry" id="all-i-have-to-do-is-ask" data-src="music/all-i-have-to-do-is-ask.mp3" data-title="When I Don't Know What to Do">
       <span class="thumb"><img src="art/thumbs/when-i-dont-know-what-to-do.jpg" width="240" height="160" loading="lazy" alt="Artwork for When I Don't Know What to Do"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>When I Don't Know What to Do</h3><p class="meta">James 1:5 · Written May 17, 2026</p></div>
+          <button class="share" type="button" aria-label="Share When I Don't Know What to Do">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play When I Don't Know What to Do">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -908,11 +953,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/he-promised.mp3" data-title="He Promised">
+    <article class="entry" id="he-promised" data-src="music/he-promised.mp3" data-title="He Promised">
       <span class="thumb"><img src="art/thumbs/he-promised.jpg" width="240" height="240" loading="lazy" alt="Artwork for He Promised"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He Promised</h3><p class="meta">Written June 11, 2026</p></div>
+          <button class="share" type="button" aria-label="Share He Promised">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play He Promised">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -971,11 +1019,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/jehovah-nissi.mp3" data-title="Jehovah Nissi (Banner Over Me)">
+    <article class="entry" id="jehovah-nissi" data-src="music/jehovah-nissi.mp3" data-title="Jehovah Nissi (Banner Over Me)">
       <span class="thumb"><img src="art/thumbs/jehovah-nissi.jpg" width="240" height="200" loading="lazy" alt="Artwork for Jehovah Nissi (Banner Over Me)"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Jehovah Nissi (Banner Over Me)</h3><p class="meta">Exodus 17:15 · Written August 25, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Jehovah Nissi (Banner Over Me)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Jehovah Nissi (Banner Over Me)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1034,11 +1085,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/youve-got-my-future-in-your-hands.mp3" data-title="You've Got My Future in Your Hands">
+    <article class="entry" id="youve-got-my-future-in-your-hands" data-src="music/youve-got-my-future-in-your-hands.mp3" data-title="You've Got My Future in Your Hands">
       <span class="thumb"><img src="art/thumbs/youve-got-my-future-in-your-hands.jpg" width="240" height="240" loading="lazy" alt="Artwork for You've Got My Future in Your Hands"></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>You&rsquo;ve Got My Future in Your Hands</h3><p class="meta">Jeremiah 29:11 · Written January 22, 2026</p></div>
+          <button class="share" type="button" aria-label="Share You've Got My Future in Your Hands">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play You've Got My Future in Your Hands">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1101,11 +1155,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/all-things.mp3" data-title="All Things (Unwavering Faith)">
+    <article class="entry" id="all-things" data-src="music/all-things.mp3" data-title="All Things (Unwavering Faith)">
       <span class="thumb"><img src="art/thumbs/all-things.jpg" width="240" height="240" loading="lazy" alt="Artwork for All Things (Unwavering Faith)"></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>All Things (Unwavering Faith)</h3><p class="meta">Romans 8:28 · Key of G · Written January 21, 2026</p></div>
+          <button class="share" type="button" aria-label="Share All Things (Unwavering Faith)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play All Things (Unwavering Faith)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1172,11 +1229,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/you-cant-burn-down-a-church.mp3" data-title="You Can't Burn Down a Church That Lives in Our Hearts">
+    <article class="entry" id="you-cant-burn-down-a-church" data-src="music/you-cant-burn-down-a-church.mp3" data-title="You Can't Burn Down a Church That Lives in Our Hearts">
       <span class="thumb"><img src="art/thumbs/you-cant-burn-down-a-church.jpg" width="240" height="240" loading="lazy" alt="Artwork for You Can't Burn Down a Church That Lives in Our Hearts"></span></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>You Can&rsquo;t Burn Down a Church That Lives in Our Hearts</h3><p class="meta">First Baptist Ocala · Written January 27, 2026</p></div>
+          <button class="share" type="button" aria-label="Share You Can't Burn Down a Church That Lives in Our Hearts">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play You Can't Burn Down a Church That Lives in Our Hearts">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1245,11 +1305,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/run-dont-walk.mp3" data-title="RUN, Don't Walk (Flee to Jesus)">
+    <article class="entry" id="run-dont-walk" data-src="music/run-dont-walk.mp3" data-title="RUN, Don't Walk (Flee to Jesus)">
       <span class="thumb"><img src="art/thumbs/run-dont-walk.jpg" width="240" height="240" loading="lazy" alt="Artwork for RUN, Don't Walk (Flee to Jesus)"></span></span></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>RUN, Don&rsquo;t Walk (Flee to Jesus)</h3><p class="meta">Written February 24, 2026</p></div>
+          <button class="share" type="button" aria-label="Share RUN, Don't Walk (Flee to Jesus)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play RUN, Don't Walk (Flee to Jesus)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1326,11 +1389,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/with-love-i-let-go.mp3" data-title="With Love, I Let Go">
+    <article class="entry" id="with-love-i-let-go" data-src="music/with-love-i-let-go.mp3" data-title="With Love, I Let Go">
       <span class="thumb"><img src="art/thumbs/with-love-i-let-go.jpg" width="160" height="240" loading="lazy" alt="Artwork for With Love, I Let Go"></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>With Love, I Let Go</h3><p class="meta">Written January 18, 2026</p></div>
+          <button class="share" type="button" aria-label="Share With Love, I Let Go">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play With Love, I Let Go">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1393,11 +1459,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/god-stepped-in.mp3" data-title="God Stepped In">
+    <article class="entry" id="god-stepped-in" data-src="music/god-stepped-in.mp3" data-title="God Stepped In">
       <span class="thumb"><img src="art/thumbs/god-stepped-in.jpg" width="240" height="200" loading="lazy" alt="Artwork for God Stepped In"></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>God Stepped In</h3><p class="meta">Sequel to &ldquo;With Love, I Let Go&rdquo; · Written April 25, 2026</p></div>
+          <button class="share" type="button" aria-label="Share God Stepped In">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play God Stepped In">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1470,11 +1539,14 @@
       <span class="count">For the ones I love</span>
     </div>
 
-    <article class="entry" data-src="music/everybody-loved-dutton.mp3" data-title="Everybody Loved Dutton">
+    <article class="entry" id="everybody-loved-dutton" data-src="music/everybody-loved-dutton.mp3" data-title="Everybody Loved Dutton">
       <span class="thumb"><img src="art/thumbs/everybody-loved-dutton.jpg" width="240" height="200" loading="lazy" alt="Artwork for Everybody Loved Dutton"></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Everybody Loved Dutton</h3><p class="meta">Written January 23, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Everybody Loved Dutton">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Everybody Loved Dutton">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1566,11 +1638,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/mamas-song.mp3" data-title="Mama's Song">
+    <article class="entry" id="mamas-song" data-src="music/mamas-song.mp3" data-title="Mama's Song">
       <span class="thumb"><img src="art/thumbs/mamas-song.jpg" width="240" height="240" loading="lazy" alt="Artwork for Mama's Song"></span></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Mama&rsquo;s Song</h3><p class="meta">Written February 16, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Mama's Song">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Mama's Song">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1639,11 +1714,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/geraldine-our-tough-ole-bird.mp3" data-title="Geraldine (Our Tough Old Bird)">
+    <article class="entry" id="geraldine-our-tough-ole-bird" data-src="music/geraldine-our-tough-ole-bird.mp3" data-title="Geraldine (Our Tough Old Bird)">
       <span class="thumb"><img src="art/thumbs/geraldine.jpg" width="240" height="240" loading="lazy" alt="Artwork for Geraldine (Our Tough Old Bird)"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Geraldine (Our Tough Old Bird)</h3><p class="meta">Written May 9, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Geraldine (Our Tough Old Bird)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Geraldine (Our Tough Old Bird)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1723,11 +1801,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/room-for-one-more.mp3" data-title="Room for One More">
+    <article class="entry" id="room-for-one-more" data-src="music/room-for-one-more.mp3" data-title="Room for One More">
       <span class="thumb"><img src="art/thumbs/room-for-one-more.jpg" width="240" height="160" loading="lazy" alt="Artwork for Room for One More"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Room for One More</h3><p class="meta">A Song for Aunt Betty · Written September 5, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Room for One More">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Room for One More">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1791,11 +1872,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/ive-got-a-six-pack.mp3" data-title="I've Got a Six Pack!">
+    <article class="entry" id="ive-got-a-six-pack" data-src="music/ive-got-a-six-pack.mp3" data-title="I've Got a Six Pack!">
       <span class="thumb"><img src="art/thumbs/ive-got-a-six-pack.jpg" width="240" height="200" loading="lazy" alt="Artwork for I've Got a Six Pack!"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>I&rsquo;ve Got a Six Pack!</h3><p class="meta">For my six grandchildren · Written January 19, 2026</p></div>
+          <button class="share" type="button" aria-label="Share I've Got a Six Pack!">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play I've Got a Six Pack!">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1843,11 +1927,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/hangin-with-my-grammy.mp3" data-title="Hangin' with My Grammy">
+    <article class="entry" id="hangin-with-my-grammy" data-src="music/hangin-with-my-grammy.mp3" data-title="Hangin' with My Grammy">
       <span class="thumb"><img src="art/thumbs/hangin-with-my-grammy.jpg" width="240" height="175" loading="lazy" alt="Artwork for Hangin' with My Grammy"></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Hangin&rsquo; with My Grammy</h3><p class="meta">Written for Khloe · March 22, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Hangin' with My Grammy">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Hangin' with My Grammy">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1921,11 +2008,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/ethans-song-one-one.mp3" data-title="Ethan's Song (One One)">
+    <article class="entry" id="ethans-song-one-one" data-src="music/ethans-song-one-one.mp3" data-title="Ethan's Song (One One)">
       <span class="thumb"><img src="art/thumbs/ethans-song-one-one.jpg" width="180" height="240" loading="lazy" alt="Artwork for Ethan's Song (One One)"></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Ethan&rsquo;s Song (One One)</h3><p class="meta">For Ethan&rsquo;s 18th birthday</p></div>
+          <button class="share" type="button" aria-label="Share Ethan's Song (One One)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Ethan's Song (One One)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -1984,11 +2074,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/brady-is-the-best.mp3" data-title="Brady Is the Best">
+    <article class="entry" id="brady-is-the-best" data-src="music/brady-is-the-best.mp3" data-title="Brady Is the Best">
       <span class="thumb"><img src="art/thumbs/bradys-song.jpg" width="240" height="240" loading="lazy" alt="Artwork for Brady Is the Best"></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Brady Is the Best</h3><p class="meta">For Brady · Written March 17, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Brady Is the Best">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Brady Is the Best">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2042,11 +2135,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/the-king-beside-his-queen.mp3" data-title="The King Beside His Queen">
+    <article class="entry" id="the-king-beside-his-queen" data-src="music/the-king-beside-his-queen.mp3" data-title="The King Beside His Queen">
       <span class="thumb"><img src="art/thumbs/the-king-beside-his-queen.jpg" width="200" height="240" loading="lazy" style="object-position:center 30%" alt="Artwork for The King Beside His Queen"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>The King Beside His Queen</h3><p class="meta">A Song for Phil · Written September 5, 2026</p></div>
+          <button class="share" type="button" aria-label="Share The King Beside His Queen">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play The King Beside His Queen">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2113,11 +2209,14 @@
       <span class="count">The people we came from</span>
     </div>
 
-    <article class="entry" data-src="music/two-little-souls.mp3" data-title="Two Little Souls">
+    <article class="entry" id="two-little-souls" data-src="music/two-little-souls.mp3" data-title="Two Little Souls">
       <span class="thumb"><img src="art/thumbs/two-little-souls.jpg" width="240" height="160" loading="lazy" alt="Artwork for Two Little Souls"></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Two Little Souls</h3><p class="meta">A duet · Written April 10, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Two Little Souls">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Two Little Souls">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2192,11 +2291,14 @@
       <span class="count">For the friends God gave me</span>
     </div>
 
-    <article class="entry" data-src="music/gifted-golfing-az.mp3" data-title="Gifted Golf AZ">
+    <article class="entry" id="gifted-golfing-az" data-src="music/gifted-golfing-az.mp3" data-title="Gifted Golf AZ">
       <span class="thumb"><img src="art/thumbs/gifted-golf-az.jpg" width="240" height="240" loading="lazy" alt="The Gifted Golf AZ logo"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Gifted Golf AZ</h3><p class="meta">Written for Harold · August 29, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Gifted Golf AZ">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Gifted Golf AZ">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2271,11 +2373,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/haul-ass-debbie.mp3" data-title="Haul Ass, Debbie!">
+    <article class="entry" id="haul-ass-debbie" data-src="music/haul-ass-debbie.mp3" data-title="Haul Ass, Debbie!">
       <span class="thumb"><img src="art/thumbs/haul-ass-debbie.jpg" width="240" height="200" loading="lazy" alt="Artwork for Haul Ass, Debbie!"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Haul Ass, Debbie!</h3><p class="meta">Written May 3, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Haul Ass, Debbie!">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Haul Ass, Debbie!">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2358,11 +2463,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/lanas-song.mp3" data-title="Lana's Song">
+    <article class="entry" id="lanas-song" data-src="music/lanas-song.mp3" data-title="Lana's Song">
       <span class="thumb"><img src="art/thumbs/lanas-song.jpg" width="240" height="240" loading="lazy" alt="Artwork for Lana's Song"></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Lana&rsquo;s Song</h3><p class="meta">Written April 13, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Lana's Song">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Lana's Song">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2426,11 +2534,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/hey-sisi.mp3" data-title="Hey Sisi">
+    <article class="entry" id="hey-sisi" data-src="music/hey-sisi.mp3" data-title="Hey Sisi">
       <span class="thumb"><img src="art/thumbs/hey-sisi.jpg" width="180" height="240" loading="lazy" alt="Artwork for Hey Sisi"></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Hey Sisi</h3><p class="meta">Happy 64th Birthday · Written February 11, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Hey Sisi">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Hey Sisi">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2502,11 +2613,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/tobys-song.mp3" data-title="Toby (The Waddle-Wag Song)">
+    <article class="entry" id="tobys-song" data-src="music/tobys-song.mp3" data-title="Toby (The Waddle-Wag Song)">
       <span class="thumb"><img src="art/thumbs/tobys-song.jpg" width="219" height="240" loading="lazy" alt="Artwork for Toby (The Waddle-Wag Song)"></span></span></span></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Toby (The Waddle-Wag Song)</h3><p class="meta">Written January 21, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Toby (The Waddle-Wag Song)">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Toby (The Waddle-Wag Song)">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2577,11 +2691,14 @@
       <span class="count">Songs for weddings, and for people in love</span>
     </div>
 
-    <article class="entry" data-src="music/he-will-lead-me-to-you.mp3" data-title="He'll Lead Me to You">
+    <article class="entry" id="he-will-lead-me-to-you" data-src="music/he-will-lead-me-to-you.mp3" data-title="He'll Lead Me to You">
       <span class="thumb"><img src="art/thumbs/he-will-lead-me-to-you.jpg" width="160" height="240" loading="lazy" alt="Artwork for He&apos;ll Lead Me to You"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>He'll Lead Me to You</h3><p class="meta">Written April 5, 2026</p></div>
+          <button class="share" type="button" aria-label="Share He&apos;ll Lead Me to You">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play He&apos;ll Lead Me to You">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2647,11 +2764,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/here-comes-your-bride.mp3" data-title="Here Comes Your Bride">
+    <article class="entry" id="here-comes-your-bride" data-src="music/here-comes-your-bride.mp3" data-title="Here Comes Your Bride">
       <span class="thumb"><img src="art/thumbs/here-comes-your-bride.jpg" width="240" height="160" loading="lazy" alt="Artwork for Here Comes Your Bride"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Here Comes Your Bride</h3><p class="meta">Written June 7, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Here Comes Your Bride">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Here Comes Your Bride">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2727,11 +2847,14 @@
       <span class="count">My town, and my days selling houses in it</span>
     </div>
 
-    <article class="entry" data-src="music/sold-by-sheri.mp3" data-title="Sold by Sheri">
+    <article class="entry" id="sold-by-sheri" data-src="music/sold-by-sheri.mp3" data-title="Sold by Sheri">
       <span class="thumb"><img src="art/thumbs/sold-by-sheri.jpg" width="240" height="163" loading="lazy" alt="Sold by Sheri banner"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Sold by Sheri</h3><p class="meta">Written September 22, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Sold by Sheri">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Sold by Sheri">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2774,11 +2897,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/falbo-gets-it-done.mp3" data-title="Falbo Gets It Done">
+    <article class="entry" id="falbo-gets-it-done" data-src="music/falbo-gets-it-done.mp3" data-title="Falbo Gets It Done">
       <span class="thumb"><img src="art/thumbs/falbo-gets-it-done.jpg" width="240" height="240" loading="lazy" alt="Artwork for Falbo Gets It Done"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Falbo Gets It Done</h3><p class="meta">Written September 22, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Falbo Gets It Done">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Falbo Gets It Done">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2821,11 +2947,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/horse-capital-of-the-world.mp3" data-title="Horse Capital of the World">
+    <article class="entry" id="horse-capital-of-the-world" data-src="music/horse-capital-of-the-world.mp3" data-title="Horse Capital of the World">
       <span class="thumb"><img src="art/thumbs/horse-capital-of-the-world.jpg" width="240" height="160" loading="lazy" alt="Artwork for Horse Capital of the World"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>Horse Capital of the World</h3><p class="meta">Written August 25, 2026</p></div>
+          <button class="share" type="button" aria-label="Share Horse Capital of the World">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play Horse Capital of the World">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2872,11 +3001,14 @@
       </div>
     </article>
 
-    <article class="entry" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street">
+    <article class="entry" id="1774-ne-12th-street" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street">
       <span class="thumb"><img src="art/thumbs/1774-ne-12th-street.jpg" width="200" height="240" loading="lazy" style="object-position:center 18%" alt="Just Listed flyer for 1774 NE 12th Street"></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>1774 NE 12th Street</h3><p class="meta">Written September 23, 2026</p></div>
+          <button class="share" type="button" aria-label="Share 1774 NE 12th Street">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play 1774 NE 12th Street">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -2917,11 +3049,14 @@
       <span class="count">Stories to sing to the little ones</span>
     </div>
 
-    <article class="entry" data-src="music/the-teapot-who-wanted-to-fly.mp3" data-title="The Teapot Who Wanted to Fly">
+    <article class="entry" id="the-teapot-who-wanted-to-fly" data-src="music/the-teapot-who-wanted-to-fly.mp3" data-title="The Teapot Who Wanted to Fly">
       <span class="thumb"><img src="art/thumbs/the-teapot-who-wanted-to-fly.jpg" width="240" height="200" loading="lazy" alt="Artwork for The Teapot Who Wanted to Fly"></span></span>
       <div class="body">
         <div class="row">
           <div class="titlewrap"><h3>The Teapot Who Wanted to Fly</h3><p class="meta">Written August 31, 2026</p></div>
+          <button class="share" type="button" aria-label="Share The Teapot Who Wanted to Fly">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
           <button class="play" type="button" aria-label="Play The Teapot Who Wanted to Fly">
             <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
             <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
@@ -3157,6 +3292,33 @@
     t.seek.addEventListener('keyup', commit);
 
     return t;
+  });
+
+  // Share: the phone's share sheet where there is one, otherwise copy the link.
+  [].forEach.call(document.querySelectorAll('.entry'), function(el){
+    var btn = el.querySelector('.share');
+    if (!btn) return;
+    btn.addEventListener('click', function(){
+      var url = location.origin + location.pathname.replace(/index\.html$/, '') + '#' + el.id;
+      var title = el.dataset.title + ' — Songs by Sheri';
+      if (navigator.share){
+        navigator.share({ title: title, text: 'Listen to "' + el.dataset.title + '" by Sheryl Denise Long', url: url }).catch(function(){});
+        return;
+      }
+      var done = function(){
+        var tip = document.createElement('span');
+        tip.className = 'copied';
+        tip.setAttribute('role', 'status');
+        tip.textContent = 'Link copied';
+        btn.appendChild(tip);
+        setTimeout(function(){ tip.remove(); }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(done, function(){ window.prompt('Copy this link:', url); });
+      } else {
+        window.prompt('Copy this link:', url);
+      }
+    });
   });
 
   barBtn.addEventListener('click', function(){
