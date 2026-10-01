@@ -196,6 +196,26 @@
     transition:color .18s ease, border-color .18s ease;
   }
   .index a:hover, .index a:focus-visible{ color:var(--gold); border-color:var(--gold); }
+  .shuffle-all{
+    align-self:center;
+    margin-top:0.6rem;
+    display:inline-flex;
+    align-items:center;
+    gap:0.45rem;
+    font:inherit;
+    font-size:0.85rem;
+    font-weight:500;
+    color:var(--gold);
+    background:transparent;
+    border:1px solid var(--gold);
+    border-radius:999px;
+    padding:0.4rem 1rem;
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+  }
+  .shuffle-all svg{ width:15px; height:15px; display:block; }
+  .shuffle-all:hover{ background:var(--gold); color:var(--leaf-raised); }
+  .shuffle-all:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
 
   main{ max-width:var(--measure); margin:0 auto; padding:0 1.25rem; }
 
@@ -630,6 +650,24 @@
     text-overflow:ellipsis;
     color:#fffdf5;
   }
+  .bar-shuffle{
+    flex:none;
+    width:2.1rem; height:2.1rem;
+    display:grid;
+    place-items:center;
+    padding:0;
+    border:1px solid transparent;
+    border-radius:50%;
+    background:transparent;
+    color:var(--binding-ink);
+    opacity:0.55;
+    cursor:pointer;
+    transition:opacity .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .bar-shuffle svg{ width:16px; height:16px; display:block; }
+  .bar-shuffle:hover{ opacity:1; }
+  .bar-shuffle[aria-pressed="true"]{ opacity:1; color:var(--gold-stamp); border-color:var(--gold-stamp); }
+  .bar-shuffle:focus-visible{ outline:2px solid var(--gold-stamp); outline-offset:2px; }
   .bar-time{
     font-size:0.78rem;
     font-variant-numeric:tabular-nums;
@@ -687,6 +725,7 @@
       <li><a href="#ocala">Ocala</a></li>
       <li><a href="#kids">Kids</a></li>
     </ol>
+    <button class="shuffle-all" type="button" id="shuffleAll"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 4.5h2.2c1.4 0 2.3.6 3.1 1.8l2.4 3.4c.8 1.2 1.7 1.8 3.1 1.8h2.2"/><path d="M1.5 11.5h2.2c1.4 0 2.3-.6 3.1-1.8l.3-.4"/><path d="M9.2 6.7l.3-.4c.8-1.2 1.7-1.8 3.1-1.8h2.2"/><path d="M12.8 2.6l1.9 1.9-1.9 1.9"/><path d="M12.8 9.6l1.9 1.9-1.9 1.9"/></svg>Shuffle all songs</button>
   </div>
 </nav>
 
@@ -3496,6 +3535,7 @@
       <span class="bar-label">Now playing</span>
       <span class="bar-title" id="barTitle">&nbsp;</span>
     </span>
+    <button class="bar-shuffle" type="button" id="barShuffle" aria-pressed="false" aria-label="Shuffle" title="Shuffle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 4.5h2.2c1.4 0 2.3.6 3.1 1.8l2.4 3.4c.8 1.2 1.7 1.8 3.1 1.8h2.2"/><path d="M1.5 11.5h2.2c1.4 0 2.3-.6 3.1-1.8l.3-.4"/><path d="M9.2 6.7l.3-.4c.8-1.2 1.7-1.8 3.1-1.8h2.2"/><path d="M12.8 2.6l1.9 1.9-1.9 1.9"/><path d="M12.8 9.6l1.9 1.9-1.9 1.9"/></svg></button>
     <span class="bar-time" id="barTime">0:00</span>
   </div>
 </div>
@@ -3516,6 +3556,38 @@
   var barProg  = document.getElementById('barProg');
 
   var live = null;   // the entry object currently loaded in the bar
+
+  var barShuffle = document.getElementById('barShuffle');
+  var shuffleAll = document.getElementById('shuffleAll');
+  var shuffle = false;
+  var heard = [];    // songs already played in this shuffle, so none repeat
+
+  var setShuffle = function(on){
+    shuffle = on;
+    heard = [];
+    barShuffle.setAttribute('aria-pressed', on ? 'true' : 'false');
+    barShuffle.setAttribute('aria-label', on ? 'Shuffle is on' : 'Shuffle is off');
+    barShuffle.title = on ? 'Shuffle is on' : 'Shuffle is off';
+  };
+
+  var playTrack = function(t){
+    var p = t.audio.play();
+    if (p && p.catch) p.catch(function(){});
+  };
+
+  var nextTrack = function(t){
+    if (shuffle){
+      var left = tracks.filter(function(o){
+        return o !== t && !o.btn.disabled && heard.indexOf(o) < 0;
+      });
+      return left.length ? left[Math.floor(Math.random() * left.length)] : null;
+    }
+    // Carry on to the next song down the page, skipping any that failed to load.
+    for (var j = tracks.indexOf(t) + 1; j < tracks.length; j++){
+      if (!tracks[j].btn.disabled) return tracks[j];
+    }
+    return null;
+  };
 
   var tracks = [].map.call(document.querySelectorAll('.entry'), function(el){
     var audio = new Audio();
@@ -3561,6 +3633,7 @@
         if (o !== t && !o.audio.paused) o.audio.pause();
       });
       live = t;
+      if (heard.indexOf(t) < 0) heard.push(t);
       el.classList.add('is-live', 'is-playing');
       t.btn.setAttribute('aria-label', 'Pause ' + t.title);
       barTitle.textContent = t.title;
@@ -3588,15 +3661,8 @@
         bar.classList.remove('up', 'playing');
         live = null;
       }
-      // Carry on to the next song down the page, skipping any that failed to load.
-      var i = tracks.indexOf(t);
-      for (var j = i + 1; j < tracks.length; j++){
-        if (!tracks[j].btn.disabled){
-          var p = tracks[j].audio.play();
-          if (p && p.catch) p.catch(function(){});
-          break;
-        }
-      }
+      var next = nextTrack(t);
+      if (next) playTrack(next);
     });
 
     audio.addEventListener('error', function(){
@@ -3787,6 +3853,17 @@
         window.prompt('Copy this link:', url);
       }
     });
+  });
+
+  barShuffle.addEventListener('click', function(){
+    setShuffle(!shuffle);
+    if (shuffle && live) heard.push(live);
+  });
+
+  shuffleAll.addEventListener('click', function(){
+    setShuffle(true);
+    var first = nextTrack(null);
+    if (first) playTrack(first);
   });
 
   barBtn.addEventListener('click', function(){
