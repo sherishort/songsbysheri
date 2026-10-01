@@ -3588,6 +3588,15 @@
         bar.classList.remove('up', 'playing');
         live = null;
       }
+      // Carry on to the next song down the page, skipping any that failed to load.
+      var i = tracks.indexOf(t);
+      for (var j = i + 1; j < tracks.length; j++){
+        if (!tracks[j].btn.disabled){
+          var p = tracks[j].audio.play();
+          if (p && p.catch) p.catch(function(){});
+          break;
+        }
+      }
     });
 
     audio.addEventListener('error', function(){
