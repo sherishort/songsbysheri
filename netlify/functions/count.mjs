@@ -17,7 +17,7 @@ export default async (req) => {
   }
 
   const [field, delta] = step;
-  const store = getStore({ name: 'song-stats', consistency: 'strong' });
+  const store = getStore({ name: 'song-stats-2', consistency: 'strong' });
 
   // Read, bump, write only if nobody else wrote in between; retry if they did.
   for (let attempt = 0; attempt < 5; attempt++) {

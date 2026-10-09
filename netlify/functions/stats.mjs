@@ -5,7 +5,7 @@ import { isOwner } from '../lib/owner.mjs';
 export default async (req) => {
   if (!isOwner(req)) return new Response('Not found', { status: 404 });
 
-  const store = getStore({ name: 'song-stats', consistency: 'strong' });
+  const store = getStore({ name: 'song-stats-2', consistency: 'strong' });
   const { blobs } = await store.list();
   const songs = {};
   await Promise.all(blobs.map(async ({ key }) => {
