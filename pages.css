@@ -105,3 +105,9 @@
   .stanza{ break-inside:avoid; }
   .credit{ color:#333 !important; margin-top:1.2rem; }
 }
+
+/* Inside a story: a small heading and a list (e.g. "Scriptures behind the song"). */
+.sp-story-body h3{ font-size:1.15rem; margin-top:0.4rem; color:var(--gold); font-weight:600; }
+.sp-story-body ul{ margin:0; padding-left:1.2rem; display:flex; flex-direction:column; gap:0.3rem; }
+.sp-story-body li{ font-family:'EB Garamond', Georgia, serif; font-size:1.1rem; line-height:1.5; color:var(--ink-soft); }
+.sp-story-body li::marker{ color:var(--gold-stamp); }
