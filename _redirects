@@ -1,0 +1,3 @@
+# Early share links used /song/<id>; the song pages live at /songs/<id>.
+/song/*   /songs/:splat   301
+/songs    /               302

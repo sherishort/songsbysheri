@@ -392,6 +392,41 @@
     color:var(--binding-ink);
     pointer-events:none;
   }
+  .songlink{ color:inherit; text-decoration:none; }
+  .songlink:hover, .songlink:focus-visible{ color:var(--gold); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+  .storylink{
+    align-self:flex-start;
+    font-family:'EB Garamond', Georgia, serif; font-style:italic; font-size:1rem;
+    color:var(--gold); text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .storylink::after{ content:" \2192"; font-style:normal; }
+  .storylink:hover, .storylink:focus-visible{ border-color:var(--gold); }
+
+  /* ── Books ─────────────────────────────────────────────── */
+  .books{ padding-block:0 2.7rem; }
+  .books .part-head{ margin-bottom:1.2rem; }
+  .book{ display:grid; grid-template-columns:7.5rem 1fr; gap:1.1rem; align-items:start; }
+  .book-cover{
+    aspect-ratio:2/3; border-radius:3px 6px 6px 3px; overflow:hidden;
+    background:linear-gradient(160deg, var(--binding), var(--binding-deep));
+    color:var(--binding-ink); box-shadow:0 12px 26px -16px var(--shadow), inset 4px 0 0 rgba(0,0,0,0.18);
+    display:flex; flex-direction:column; justify-content:space-between; padding:0.8rem 0.65rem;
+    text-align:center; border:1px solid var(--rule);
+  }
+  .book-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .book-cover:has(img){ padding:0; }
+  .book-cover .bc-title{ font-family:'EB Garamond', Georgia, serif; font-size:0.98rem; line-height:1.2; }
+  .book-cover .bc-author{ font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-bright); }
+  .book-text{ display:flex; flex-direction:column; gap:0.45rem; }
+  .book-text h3{ font-size:1.35rem; line-height:1.25; }
+  .book-blurb{ color:var(--ink-soft); line-height:1.55; }
+  .book-links{ font-size:0.85rem; color:var(--ink-faint); }
+  .book-links a{ color:var(--gold); }
+  .about-links{ margin-top:0.9rem; display:flex; gap:1.2rem; flex-wrap:wrap; }
+  .about-links a{ color:var(--gold); text-decoration:none; border-bottom:1px solid transparent; }
+  .about-links a:hover{ border-color:var(--gold); }
+  @media (max-width:420px){ .book{ grid-template-columns:5.6rem 1fr; gap:0.85rem; } }
+
   .entry:target{ background:var(--leaf-raised); }
   .entry{ scroll-margin-top:1rem; }
   /* A song someone opened from a shared link: a soft gold glow that fades. */
@@ -596,6 +631,8 @@
     gap:0.55rem;
     text-align:center;
   }
+  .footer-inner .sig a{ color:inherit; text-decoration:none; border-bottom:1px solid transparent; }
+  .footer-inner .sig a:hover{ border-color:currentColor; }
   .footer-inner .sig{
     font-family:'EB Garamond', Georgia, serif;
     font-style:italic;
@@ -744,6 +781,7 @@
   <section class="about" id="about">
     <h2>Music written to carry what words alone can't</h2>
     <p>I write and record gospel and Christian music under the name Sheryl Denise Long. These songs came out of real seasons of faith, doubt, and the moments God stepped in. Some are testimony. Some are praise, prayer, and worship. Some were written for the family and friends God gave me, and a few came out of my days selling houses here in Ocala. Thank you for listening.</p>
+    <p class="about-links"><a href="/about">Read my story &rarr;</a><a href="#books">My book &rarr;</a></p>
   </section>
 
   <section class="part" id="my-very-first-song">
@@ -3810,6 +3848,27 @@
     </article>
   </section>
 
+  <section class="books" id="books">
+    <div class="part-head">
+      <h2>Books by Sheri</h2>
+      <span class="count">Where the songs and the words meet</span>
+    </div>
+
+    <!-- A book is also introduced on the page of each song named in data-songs. -->
+    <article class="book" data-songs="all-about-that-faith">
+      <div class="book-cover" aria-hidden="true">
+        <span class="bc-title">Learning to Walk in Unwavering Faith</span>
+        <span class="bc-author">Sheryl Denise Long</span>
+      </div>
+      <div class="book-text">
+        <h3>Learning to Walk in Unwavering Faith</h3>
+        <p class="meta">A book by Sheryl Denise Long</p>
+        <p class="book-blurb">My book goes hand in hand with my song &ldquo;All About That Faith.&rdquo; More about it, and where to find it, coming soon.</p>
+        <p class="book-links">Available soon</p>
+      </div>
+    </article>
+  </section>
+
   <section class="write" id="write">
     <div class="part-head">
       <h2>Write to Sheri</h2>
@@ -3842,7 +3901,7 @@
 
 <footer>
   <div class="footer-inner">
-    <p class="sig">Sheryl Denise Long · Ocala, Florida</p>
+    <p class="sig">Sheryl Denise Long · Ocala, Florida · <a href="/about">About Sheri</a> · <a href="#books">Books</a></p>
     <p class="legal">Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.</p>
   </div>
 </footer>
@@ -3864,21 +3923,20 @@
 </div>
 
 <script>
-// Opened from a shared song link (songsbysheri.com/song/<id>, or an older
-// songsbysheri.com/#<id> link): scroll to that song and light it up.
+// Arrived with a song or section in the address (songsbysheri.com/#<id>, e.g.
+// from "Back to all songs"): scroll to it once the page has settled, and light
+// up a song.
 (function(){
-  var tag = document.querySelector('meta[name="sbs-song"]');
-  var id = tag ? tag.content : decodeURIComponent(location.hash.slice(1));
+  var id = decodeURIComponent(location.hash.slice(1));
   var el = id && document.getElementById(id);
-  if (!el || !el.classList.contains('entry')) return;
-  if (tag && history.replaceState) history.replaceState(null, '', '/#' + id);
+  if (!el) return;
   var moved = false;
   var mark = function(){ moved = true; };
   window.addEventListener('wheel', mark, { passive: true, once: true });
   window.addEventListener('touchmove', mark, { passive: true, once: true });
-  var go = function(){ if (!moved) el.scrollIntoView({ block: 'start' }); };
+  var go = function(){ if (!moved) el.scrollIntoView({ block: 'start', behavior: 'instant' }); };
   go();
-  el.classList.add('is-shared');
+  if (el.classList.contains('entry')) el.classList.add('is-shared');
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
   window.addEventListener('load', go);
 })();
@@ -4170,13 +4228,33 @@
     }).catch(function(){});
   }
 
+  // Each song's title opens its own page (/songs/<id>); songs with a story get a link to it.
+  [].forEach.call(document.querySelectorAll('.entry'), function(el){
+    var h = el.querySelector('h3');
+    if (h && !h.querySelector('a')){
+      var a = document.createElement('a');
+      a.className = 'songlink';
+      a.href = '/songs/' + el.id;
+      while (h.firstChild) a.appendChild(h.firstChild);
+      h.appendChild(a);
+    }
+    if (el.querySelector('template.story')){
+      var s = document.createElement('a');
+      s.className = 'storylink';
+      s.href = '/songs/' + el.id + '#story-h';
+      s.textContent = 'The story behind this song';
+      var sheet = el.querySelector('details.sheet');
+      if (sheet) sheet.parentNode.insertBefore(s, sheet);
+    }
+  });
+
   // Share: the phone's share sheet where there is one, otherwise copy the link.
   [].forEach.call(document.querySelectorAll('.entry'), function(el){
     var btn = el.querySelector('.share');
     if (!btn) return;
     btn.addEventListener('click', function(){
-      // Its own page, so link previews show this song's cover and title.
-      var url = location.origin + '/song/' + el.id;
+      // The song's own page, so link previews show its cover and title.
+      var url = location.origin + '/songs/' + el.id;
       var title = el.dataset.title + ' — Songs by Sheri';
       if (navigator.share){
         navigator.share({ title: title, text: 'Listen to "' + el.dataset.title + '" by Sheryl Denise Long', url: url }).catch(function(){});
