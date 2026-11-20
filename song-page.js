@@ -27,8 +27,10 @@
     } catch(e){}
   };
 
-  // ── Player ──
+  // ── Player and heart (a YouTube-only listing has neither) ──
   var box = page.querySelector('.sp-player');
+  if (box) (function(){
+  // ── Player ──
   var btn = box.querySelector('.play'), seek = box.querySelector('.seek');
   var cur = box.querySelector('.cur'), dur = box.querySelector('.dur');
   var audio = new Audio();
@@ -108,6 +110,8 @@
     record(on ? 'heart' : 'unheart');
   });
 
+  })();
+
   // ── Share ──
   var flash = function(el, text){
     var label = el.querySelector('span'), was = label.textContent;
@@ -174,6 +178,12 @@
       form.querySelector('.left').textContent = 'That didn’t send. Please try again in a moment.';
     });
   });
+  });
+
+  // A listing's video tour and the songs' players take turns: one plays at a time.
+  [].forEach.call(document.querySelectorAll('video'), function(v){
+    players.push(v);
+    v.addEventListener('play', function(){ players.forEach(function(o){ if (o !== v && !o.paused) o.pause(); }); });
   });
 
   // Listing Songs page opened at /listings#<id>: go to that song and light it up.
