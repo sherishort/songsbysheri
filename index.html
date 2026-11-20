@@ -392,8 +392,50 @@
     color:var(--binding-ink);
     pointer-events:none;
   }
+  .songlink{ color:inherit; text-decoration:none; }
+  .songlink:hover, .songlink:focus-visible{ color:var(--gold); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+  .storylink{
+    align-self:flex-start;
+    font-family:'EB Garamond', Georgia, serif; font-style:italic; font-size:1rem;
+    color:var(--gold); text-decoration:none; border-bottom:1px solid transparent;
+  }
+  .storylink::after{ content:" \2192"; font-style:normal; }
+  .storylink:hover, .storylink:focus-visible{ border-color:var(--gold); }
+
+  /* ── Books ─────────────────────────────────────────────── */
+  .books{ padding-block:0 2.7rem; }
+  .books .part-head{ margin-bottom:1.2rem; }
+  .book{ display:grid; grid-template-columns:7.5rem 1fr; gap:1.1rem; align-items:start; }
+  .book-cover{
+    aspect-ratio:2/3; border-radius:3px 6px 6px 3px; overflow:hidden;
+    background:linear-gradient(160deg, var(--binding), var(--binding-deep));
+    color:var(--binding-ink); box-shadow:0 12px 26px -16px var(--shadow), inset 4px 0 0 rgba(0,0,0,0.18);
+    display:flex; flex-direction:column; justify-content:space-between; padding:0.8rem 0.65rem;
+    text-align:center; border:1px solid var(--rule);
+  }
+  .book-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .book-cover:has(img){ padding:0; }
+  .book-cover .bc-title{ font-family:'EB Garamond', Georgia, serif; font-size:0.98rem; line-height:1.2; }
+  .book-cover .bc-author{ font-size:0.6rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold-bright); }
+  .book-text{ display:flex; flex-direction:column; gap:0.45rem; }
+  .book-text h3{ font-size:1.35rem; line-height:1.25; }
+  .book-blurb{ color:var(--ink-soft); line-height:1.55; }
+  .book-links{ font-size:0.85rem; color:var(--ink-faint); }
+  .book-links a{ color:var(--gold); }
+  .about-links{ margin-top:0.9rem; display:flex; gap:1.2rem; flex-wrap:wrap; }
+  .about-links a{ color:var(--gold); text-decoration:none; border-bottom:1px solid transparent; }
+  .about-links a:hover{ border-color:var(--gold); }
+  @media (max-width:420px){ .book{ grid-template-columns:5.6rem 1fr; gap:0.85rem; } }
+
   .entry:target{ background:var(--leaf-raised); }
   .entry{ scroll-margin-top:1rem; }
+  /* A song someone opened from a shared link: a soft gold glow that fades. */
+  .entry.is-shared{ background:var(--leaf-raised); animation:shared-glow 4.5s ease-out 1 both; }
+  @keyframes shared-glow{
+    0%, 55%{ box-shadow:inset 0 0 0 2px var(--gold), 0 8px 26px -14px var(--shadow); }
+    100%   { box-shadow:inset 0 0 0 2px transparent, 0 1px 0 var(--rule); }
+  }
+  @media (prefers-reduced-motion: reduce){ .entry.is-shared{ animation:none; box-shadow:inset 0 0 0 2px var(--gold); } }
 
   .scrub{ display:flex; align-items:center; gap:0.7rem; }
   .time{
@@ -589,6 +631,8 @@
     gap:0.55rem;
     text-align:center;
   }
+  .footer-inner .sig a{ color:inherit; text-decoration:none; border-bottom:1px solid transparent; }
+  .footer-inner .sig a:hover{ border-color:currentColor; }
   .footer-inner .sig{
     font-family:'EB Garamond', Georgia, serif;
     font-style:italic;
@@ -717,6 +761,7 @@
   <div class="index-inner">
     <span class="eyebrow">The songs, by topic</span>
     <ol>
+      <li><a href="#my-very-first-song">My Very First Song</a></li>
       <li><a href="#faith">Faith</a></li>
       <li><a href="#family">Family</a></li>
       <li><a href="#genealogy">Genealogy</a></li>
@@ -725,6 +770,7 @@
       <li><a href="#love">Love</a></li>
       <li><a href="#ocala">Ocala</a></li>
       <li><a href="#kids">Kids</a></li>
+      <li><a href="#christmas">Christmas</a></li>
     </ol>
     <button class="shuffle-all" type="button" id="shuffleAll"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 4.5h2.2c1.4 0 2.3.6 3.1 1.8l2.4 3.4c.8 1.2 1.7 1.8 3.1 1.8h2.2"/><path d="M1.5 11.5h2.2c1.4 0 2.3-.6 3.1-1.8l.3-.4"/><path d="M9.2 6.7l.3-.4c.8-1.2 1.7-1.8 3.1-1.8h2.2"/><path d="M12.8 2.6l1.9 1.9-1.9 1.9"/><path d="M12.8 9.6l1.9 1.9-1.9 1.9"/></svg>Shuffle all songs</button>
   </div>
@@ -735,12 +781,13 @@
   <section class="about" id="about">
     <h2>Music written to carry what words alone can't</h2>
     <p>I write and record gospel and Christian music under the name Sheryl Denise Long. These songs came out of real seasons of faith, doubt, and the moments God stepped in. Some are testimony. Some are praise, prayer, and worship. Some were written for the family and friends God gave me, and a few came out of my days selling houses here in Ocala. Thank you for listening.</p>
+    <p class="about-links"><!-- <a href="/about">Read my story &rarr;</a> (add back once Sheri approves content/about.html) --><a href="#books">My book &rarr;</a></p>
   </section>
 
-  <section class="part" id="faith">
+  <section class="part" id="my-very-first-song">
     <div class="part-head">
-      <h2>Faith</h2>
-      <span class="count">My story of what God has done</span>
+      <h2>My Very First Song</h2>
+      <span class="count">Where it all began</span>
     </div>
 
     <article class="entry" id="look-to-the-father" data-src="music/look-to-the-father.mp3" data-title="Look to the Father">
@@ -764,6 +811,12 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Look to the Father">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>My daddy took me to church and raised me to have faith in God. After he died in 2003, I cried every time I thought about him. One day at the cemetery, I asked, &ldquo;Daddy, how am I supposed to live without you?&rdquo;</p>
+          <p>In my heart, I could hear what he would tell me. I was going to be just fine. He&rsquo;d raised me to look to my heavenly Father. Daddy had done his job, and I knew where to turn.</p>
+          <p>That&rsquo;s where the song came from. &ldquo;Look to the Father, look to the Son, look to the Holy Spirit, the three in one.&rdquo;</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -819,6 +872,93 @@
         </details>
       </div>
     </article>
+  </section>
+
+  <section class="part" id="faith">
+    <div class="part-head">
+      <h2>Faith</h2>
+      <span class="count">My story of what God has done</span>
+    </div>
+
+    <article class="entry" id="all-about-that-faith" data-src="music/all-about-that-faith.mp3" data-title="All About That Faith">
+      <span class="thumb"><img src="art/thumbs/all-about-that-faith.jpg" width="240" height="240" loading="lazy" alt="Artwork for All About That Faith"></span>
+      <div class="body">
+        <div class="row">
+          <div class="titlewrap"><h3>All About That Faith</h3><p class="meta">Written October 25, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love All About That Faith">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
+          <button class="share" type="button" aria-label="Share All About That Faith">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
+          <button class="play" type="button" aria-label="Play All About That Faith">
+            <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
+          </button>
+        </div>
+        <div class="scrub">
+          <span class="time cur">0:00</span>
+          <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within All About That Faith">
+          <span class="time dur">—:—</span>
+        </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;All About That Faith&rdquo; about what it means to have unwavering faith. Sometimes I know God is going to do something, and I have no idea what it&rsquo;ll be. That&rsquo;s when I have to come back to His Word and stand on what He&rsquo;s promised, even if I&rsquo;ve been waiting year after year.</p>
+          <p>That&rsquo;s where the mountains and valleys in the song come from. I don&rsquo;t always know what&rsquo;s on the other side of the mountain or how long I&rsquo;ll be in the valley. But I know Jesus is walking beside me, and with Him I can make it. That&rsquo;s what I mean when I sing, &ldquo;I&rsquo;m all about that faith.&rdquo;</p>
+        </template>
+
+        <details class="sheet">
+          <summary>Read the lyrics</summary>
+          <div class="sheet-body">
+            <img class="art" src="art/all-about-that-faith.jpg" width="1024" height="1024" loading="lazy"
+                 alt="Artwork for All About That Faith: a weathered wooden cross draped in a white cloth stands on a rocky hilltop at sunrise, the sun rising over a river winding through distant mountains, with the title in navy script and gold lettering above a line of golden music notes.">
+
+            <div class="lyrics">
+              <div class="stanza">
+                <p class="lab">Verse 1</p>
+                <p class="ly">Woke up this morning with a mountain in my way,<br>A thousand little worries trying to steal my day.<br>But I opened up my Bible, let the truth come shining through,<br>And remembered there's a mighty God who knows just what to do!</p>
+                <p class="ly">I could worry 'bout tomorrow, let my troubles run the show,<br>Or stand upon His promises and trust the One I know!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Chorus</p>
+                <p class="ly">I'm all about that faith, that faith, no fear!<br>Standing on His promises, year after year!<br>All about that faith, that faith, stand strong!<br>With Jesus walking beside me, I can keep on moving on!</p>
+                <p class="ly">No mountain too high, no valley too deep,<br>I'm trusting in the Savior who never falls asleep!<br>I'm all about that faith, that faith, right here!<br>Living by His Word, not by what I see or hear!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Verse 2</p>
+                <p class="ly">The world says, &ldquo;Keep on worrying, you've got to figure it out!&rdquo;<br>But the Word says, &ldquo;Trust the Father,&rdquo; that's what faith is all about!<br>I don't have to know the answers, I don't have to see the end,<br>I just have to trust the Savior who's my closest, faithful Friend!</p>
+                <p class="ly">When the enemy starts whispering that I'm never gonna win,<br>I remind him Who's beside me and Whose promises I'm in!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Chorus</p>
+                <p class="ly">I'm all about that faith, that faith, no fear!<br>Standing on His promises, year after year!<br>All about that faith, that faith, stand strong!<br>With Jesus walking beside me, I can keep on moving on!</p>
+                <p class="ly">No mountain too high, no valley too deep,<br>I'm trusting in the Savior who never falls asleep!<br>I'm all about that faith, that faith, right here!<br>Living by His Word, not by what I see or hear!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Bridge · Hand Claps, Building Energy</p>
+                <p class="ly">Faith comes by hearing, hearing by the Word!<br>That's the greatest promise that I've ever heard!<br>Renewing my mind, taking thoughts captive too,<br>I'm changing how I'm thinking by believing what is true!</p>
+                <p class="ly">Not by sight, but by faith I'll go,<br>Holding to the promises of the God I know!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Final Chorus · Big Gospel Harmonies</p>
+                <p class="ly">I'm all about that faith, that faith, no fear!<br>God's been good and faithful through every single year!<br>All about that faith, that faith, stand tall!<br>If my God is for me, I can face it all!</p>
+                <p class="ly">I may not know tomorrow, but I know Who holds my hand,<br>I'm walking in His promises, and on His Word I stand!</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Outro · Playful Call and Response</p>
+                <p class="ly">Leader: What's it all about?<br>Choir: THAT FAITH!</p>
+                <p class="ly">Leader: What keeps you standing?<br>Choir: THAT FAITH!</p>
+                <p class="ly">Leader: Where's your foundation?<br>Choir: GOD'S WORD!</p>
+                <p class="ly">All: We're walking in unwavering faith!</p>
+                <p class="ly">ALL ABOUT THAT FAITH</p>
+              </div>
+            </div>
+
+            <p class="credit">Lyrics &copy; 2026 Sheryl Denise Long<br>Music generated with Suno (used under license)</p>
+          </div>
+        </details>
+      </div>
+    </article>
 
     <article class="entry" id="i-claim-it-2" data-src="music/i-claim-it-2.mp3" data-title="I Claim It">
       <span class="thumb"><img src="art/thumbs/i-claim-it-2.jpg" width="240" height="160" loading="lazy" alt="Artwork for I Claim It"></span>
@@ -841,6 +981,12 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within I Claim It">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I started writing &ldquo;I Claim It&rdquo; for a friend who was going through cancer. I wanted him to have something to hold on to when he was afraid. I wanted him to know that God was right there beside him, even on the days when he felt weak.</p>
+          <p>I kept thinking about <a href="https://www.biblegateway.com/passage/?search=2%20Corinthians%204%3A8-9&amp;version=NIV" target="_blank" rel="noopener">2 Corinthians 4:8&ndash;9</a>, where Paul writes that we can be &ldquo;hard pressed on every side, but not crushed&rdquo; and &ldquo;struck down, but not destroyed.&rdquo; To me, claiming God&rsquo;s promises means standing on His Word right in the middle of whatever you&rsquo;re facing. I wanted my friend, and anyone else who hears this song, to be able to say, &ldquo;I may be walking through the battle, but I&rsquo;m walking with the Lord.&rdquo;</p>
+          <p>Dannie&rsquo;s version is peppier, more like a fight song. The version in the Faith section has a more serious Southern gospel feel. Both carry the same message. Whatever you&rsquo;re facing, God is right there beside you.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -902,6 +1048,20 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within From Promise to Praise">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wanted &ldquo;From Promise to Praise&rdquo; to feel like walking through Scripture in a song. It starts with Psalm 139 and the thought that God knew me before I knew His name. Then Jeremiah 29:11 brings in hope for the future. When I can&rsquo;t see tomorrow, I can trust the One who can.</p>
+          <p>From there, the song follows what it looks like to trust God when I don&rsquo;t know which way to go, when I&rsquo;m afraid, and when I need strength I don&rsquo;t have on my own. Along the way, Scripture reminds me that His mercies are new every morning and that nothing can separate me from His love. By the end, that walk through Scripture becomes praise. I love that it ends where Psalm 150 does, with everything that has breath praising the Lord.</p>
+          <h3>Scriptures behind the song</h3>
+          <ul>
+            <li>Psalm 139:13&ndash;16 and Jeremiah 29:11</li>
+            <li>Proverbs 3:5&ndash;6 and Joshua 1:9</li>
+            <li>Isaiah 41:10, Psalm 23:4, and Isaiah 43:2</li>
+            <li>Romans 8:28, 2 Corinthians 12:9, and Philippians 4:13</li>
+            <li>Lamentations 3:22&ndash;23 and Romans 8:38&ndash;39</li>
+            <li>Psalm 40:1&ndash;3 and Psalm 150:6</li>
+          </ul>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -978,6 +1138,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within He's Got Me">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;He&rsquo;s Got Me&rdquo; because I know how easily I get distracted from what God is telling me. I believe Satan tries to pull my attention away, and sometimes I fall for it. Then I remember how gentle God is with me. He reminds me that the One who holds me never leaves.</p>
+          <p>I can&rsquo;t always see past today, but God can. He loves me, and I can trust Him to work out His plan even when I can&rsquo;t see how. All I have to do is reach for His hand. That&rsquo;s what I wanted this song to remind me of when I start to worry. He&rsquo;s right here, and He&rsquo;s got me.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1060,6 +1225,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within My Best Chapter Is Still Ahead">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>&ldquo;My Best Chapter Is Still Ahead&rdquo; started when I was cleaning out my closets. I&rsquo;d pick something up and think, &ldquo;Why am I still holding on to this?&rdquo; Things that used to matter to me just didn&rsquo;t matter in the same way anymore. I wanted to keep what was dear to my heart. The more clutter I cleared out of my house, the quieter my mind felt, too.</p>
+          <p>That got me thinking about what I want from this chapter of my life. I want a slower, sweeter pace and more time to pay attention to what God can use me for. There&rsquo;s a freedom in needing less than I used to. That&rsquo;s what I was feeling when I wrote this song. I&rsquo;m turning the page, and I believe my best chapter is still ahead.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1147,6 +1317,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>&ldquo;When I Don&rsquo;t Know What to Do&rdquo; came out of something I&rsquo;ve had to learn. When I catch myself trying to figure everything out, I stop, get quiet, and ask, &ldquo;God, what do I do?&rdquo;</p>
+          <p>James 1:5 tells me that when I need wisdom, I can ask God, and He gives it generously without finding fault. So that&rsquo;s the verse I pray when I don&rsquo;t have the answers. And if I&rsquo;m going to ask Him, I want to take Him at His word. I can take the next step without knowing how everything will turn out, because I trust He&rsquo;ll be with me through it all.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -1229,6 +1404,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>When the road feels long and I wonder how I&rsquo;m going to make it, I need to remember what God promised. He&rsquo;ll be with me wherever I go. He&rsquo;ll give me strength when I&rsquo;m worn out and peace when I&rsquo;m afraid.</p>
+          <p>That&rsquo;s why I wrote &ldquo;He Promised.&rdquo; There may be tears along the way, but I can keep going because I trust God to see me through.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -1298,6 +1478,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I wrote &ldquo;Jehovah Nissi, Banner Over Me&rdquo; for a friend who was worn out from fighting battles she never felt were hers to fight. She was tired, and she couldn&rsquo;t understand why so much kept falling on her.</p>
+          <p>Jehovah Nissi means &ldquo;The Lord is my banner.&rdquo; I wanted this song to give her words to pray when she felt worn out. She could call on God and remember she didn&rsquo;t have to face those battles alone.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -1366,6 +1551,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within You've Got My Future in Your Hands">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;You&rsquo;ve Got My Future in Your Hands&rdquo; for those nights when I&rsquo;m staring at four walls, praying for a breakthrough, and wondering what&rsquo;s ahead. Some days heaven feels far away. Even then, I believe God is with me when I pray.</p>
+          <p>Jeremiah 29:11 reminds me that God sees a future I can&rsquo;t see yet. When things aren&rsquo;t going the way I hoped, I come back to what I know about Him. He&rsquo;s good, and He hasn&rsquo;t lost track of me. That&rsquo;s what I want to remember in the &ldquo;not yet&rdquo; season. I can trust Him with what comes next.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1439,6 +1629,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within All Things (Unwavering Faith)">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>A pastor I love dearly often says, &ldquo;God doesn&rsquo;t waste pain.&rdquo; Those words stayed with me. After I wrote &ldquo;All Things,&rdquo; I sent him the song and told him that&rsquo;s where it started.</p>
+          <p>I&rsquo;ve been in valleys that were hard to climb out of. I&rsquo;ve wrestled with doubt and wondered what good could come out of the heartache. And right there in the valley, God met me. That&rsquo;s what Romans 8:28 means to me when I sing this song. Even when I can&rsquo;t see what God is doing, I can trust Him to work through what I&rsquo;m going through and bring good out of it.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1516,6 +1711,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within You Can't Burn Down a Church That Lives in Our Hearts">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I remember standing in a field across the street from First Baptist Church in downtown Ocala, holding my little boy on my hip and watching our church burn. It felt like watching our home burn. We were there Sunday morning, Sunday night, Wednesday night, and just about any other night something was going on. That&rsquo;s where we learned to pray, to sing, and to trust God.</p>
+          <p>I was thinking about that night when I wrote this song. I still remember how sad it was to watch a place we loved go up in flames. And I remember the people who kept their faith through it. We&rsquo;d lost the place where we gathered, but we still had each other, and God was still in our hearts. That&rsquo;s what I mean when I sing, &ldquo;You can&rsquo;t burn down a church that lives in our hearts.&rdquo;</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1595,6 +1795,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within RUN, Don't Walk (Flee to Jesus)">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote this song for the person who keeps telling everybody, &ldquo;I&rsquo;m fine,&rdquo; while deep down they&rsquo;re scared and worn out. When you&rsquo;re already worn thin, it&rsquo;s easy to give in to something you know will only make things worse. That&rsquo;s why the chorus is urgent. Run to Jesus. You can go to Him right now, even if you&rsquo;ve never put your trust in Him before.</p>
+          <p>I wanted people to hear what I believe about Jesus. He&rsquo;s already taken your place, and you can come to Him with whatever you&rsquo;re carrying. The hard things may still be there tomorrow, but you can ask Him for peace and for wisdom about what to do next. He&rsquo;s our fortress. That&rsquo;s why I say, &ldquo;Run, don&rsquo;t walk.&rdquo;</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1680,6 +1885,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I wrote &ldquo;With Love, I Let Go&rdquo; about a friendship that meant a lot to me. I cared so much about what my friend was going through that I kept trying to fix things for her. I tell people to ask God for direction, but there I was trying to do it all myself. I finally had to admit that my trying to help was making things harder.</p>
+          <p>Stepping away hurt. I still loved her, and I knew if I stayed as involved as I was, I&rsquo;d keep trying to fix things I couldn&rsquo;t fix. So I had to get out of God&rsquo;s way and trust Him with someone I cared about. That&rsquo;s what I mean when I sing, &ldquo;With love, I let go.&rdquo;</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -1752,6 +1962,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within God Stepped In">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>&ldquo;God Stepped In&rdquo; is the next part of the story I told in &ldquo;With Love, I Let Go.&rdquo; My friend and I used to talk every day, so three months apart felt like forever. I cried. I missed her, and there were days I wondered if stepping away had been the right thing to do. But I knew I needed to stop trying to fix everything myself and give it to God.</p>
+          <p>Once I stepped back, I began to see God heal places I couldn&rsquo;t reach. When we found our way back to each other, our friendship was stronger. We&rsquo;re each learning to trust what God has planned for our own lives, and we get to encourage each other along the way. That&rsquo;s what I wanted to celebrate in this song. We&rsquo;re learning what it looks like to keep God in the middle of our friendship.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1835,6 +2050,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Everybody Loved Dutton">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;Everybody Loved Dutton&rdquo; to celebrate my daddy. I wanted to remember him the way people knew him, right down to his little quirks and the things he did that made him who he was. Those are the details that make me smile when I think about him.</p>
+          <p>I wanted to put some of that joy into a song. If you knew Daddy, I hope it brings back a memory of your own. And if you never met him, I hope it gives you a little glimpse of why we loved him so much.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -1938,6 +2158,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I was nine years old when my mama passed away. I still had so many memories of her, and I was afraid some of them would slip away as I got older. So I started putting them down on paper.</p>
+          <p>That&rsquo;s where this song came from. I wanted to remember Mama and celebrate the time I did get to spend with her. Writing it gave me a way to hold on to those memories and share a little of her with other people.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2016,6 +2241,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Geraldine (Our Tough Old Bird)">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>Her name was Geraldine, but we called her Grandma Geri. She was prim and proper, and you&rsquo;d better use your manners around her. If you stepped out of line, she&rsquo;d let you know.</p>
+          <p>I don&rsquo;t think Grandma Geri missed a beat after her divorce. She never remarried and raised her daughter on her own, with a little backup from her parents when she needed it. She was strong and independent. She knew exactly who she was, what she wanted to do, and how she was going to do it. I always admired that about her. When I call her a tough old bird in the song, I say it with love.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2181,6 +2411,10 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I wanted to write a fun song about my six grandkids. I don&rsquo;t work out, but one day it hit me. I&rsquo;ve got a six-pack anyway. My grandkids are my six-pack!</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2238,6 +2472,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Hangin' with My Grammy">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>My granddaughter will call me and say, &ldquo;Grammy, what are you doing? I want to come over.&rdquo; And I&rsquo;ll say, &ldquo;Okay!&rdquo; Sometimes I make her breakfast and coffee. Sometimes she talks me into going out to eat.</p>
+          <p>That&rsquo;s what &ldquo;Hangin&rsquo; with My Grammy&rdquo; is about. I wanted to write down a little of what it&rsquo;s like when we spend time together, because even something as ordinary as making her coffee is a memory I want to keep.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2323,6 +2562,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>When my oldest grandson, Ethan, turned eighteen, I wanted to write a song about his first eighteen years. I started with the day he was born and worked my way up to the young man he is now. I put in the details that make it his story, like where he went to school, what he likes to do, and the Jeep he drives.</p>
+          <p>I wanted him to have something he could listen to years from now and remember what those first eighteen years looked like through his Grammy&rsquo;s eyes.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2392,6 +2636,10 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>&ldquo;Brady Is the Best&rdquo; is a fun little song about my grandson and the things he likes to do, from playing golf to playing paddleball. Brady&rsquo;s a cool kid, and I wanted to celebrate him in a way that felt like him. I hope it makes him smile when he hears it.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2455,6 +2703,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within The King Beside His Queen">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;The King Beside His Queen&rdquo; for my Uncle Phil. I&rsquo;ve watched him stand right beside Aunt Betty as they&rsquo;ve made room for children who needed a home. He stepped up as a dad to those kids, and I wanted him to know how much I admire him for that.</p>
+          <p>Phil&rsquo;s a man of many talents. He&rsquo;s a former Marine, he&rsquo;s an artist, and he still likes to run. When I think about what I wanted to celebrate in this song, I keep coming back to the way he shows up for Betty and the kids. She&rsquo;s his queen, and he&rsquo;s right there beside her.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2532,6 +2785,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Two Little Souls">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I help people discover their family history, and I have a special place in my heart for people who were adopted and want to find their birth families. &ldquo;Two Little Souls&rdquo; was inspired by a friend who is a twin and was adopted shortly after birth. His story made me think about what that moment might have felt like for both mothers.</p>
+          <p>I wanted the song to hold the heartache of a mother placing her child for adoption and the joy of a mother who had longed for a child finally getting to hold one in her arms. I believe God was with both mothers, and I wanted to make room for both of their stories in the song.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2618,6 +2876,12 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I started writing &ldquo;I Claim It&rdquo; for a friend who was going through cancer. I wanted him to have something to hold on to when he was afraid. I wanted him to know that God was right there beside him, even on the days when he felt weak.</p>
+          <p>I kept thinking about <a href="https://www.biblegateway.com/passage/?search=2%20Corinthians%204%3A8-9&amp;version=NIV" target="_blank" rel="noopener">2 Corinthians 4:8&ndash;9</a>, where Paul writes that we can be &ldquo;hard pressed on every side, but not crushed&rdquo; and &ldquo;struck down, but not destroyed.&rdquo; To me, claiming God&rsquo;s promises means standing on His Word right in the middle of whatever you&rsquo;re facing. I wanted my friend, and anyone else who hears this song, to be able to say, &ldquo;I may be walking through the battle, but I&rsquo;m walking with the Lord.&rdquo;</p>
+          <p>Dannie&rsquo;s version is peppier, more like a fight song. The version in the Faith section has a more serious Southern gospel feel. Both carry the same message. Whatever you&rsquo;re facing, God is right there beside you.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2679,6 +2943,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Gifted Golf AZ">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;Gifted Golf AZ&rdquo; about Harold Ehrenberg. In 2025, Harold got a heart transplant after just a week on the waiting list. That was the first blessing. A year later, he was back out playing golf every day. That was another one.</p>
+          <p>Now he&rsquo;s getting ready to compete in the transplant games, with his sights set on both the U.S. and world games. I thought it would be fun to tell his story in a song and give him something to play while we&rsquo;re all cheering him on.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2765,6 +3034,10 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>Lana was the oldest daughter of my dear friend Tina. I wanted to celebrate Lana&rsquo;s life and give Tina something she could come back to whenever she wanted to spend a little time remembering her daughter. That&rsquo;s why I wrote this song. I wanted Tina to hear Lana&rsquo;s name and know that I remember her, too.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2838,6 +3111,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Hey Sisi">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;Hey Sisi&rdquo; for my oldest friend, Nancy Alvarez Bruce, on her 64th birthday. We&rsquo;ve known each other since we were three. When I think about how much of my life she&rsquo;s been part of, I realize what a blessing it is to have a friend who&rsquo;s known me that long.</p>
+          <p>For her birthday, I wanted her to hear how much her friendship has meant to me and how grateful I am that we&rsquo;ve gotten to go through so much of life together. So I put it in a song.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -2921,6 +3199,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>My dear friends John and Kay Campbell lost their Toby a few years ago, and it was devastating for their family. One day I was sitting with John and said, &ldquo;John, let&rsquo;s write a song about Toby.&rdquo;</p>
+          <p>We started talking about all the little things Toby used to do, and we put those memories into a song. John and Kay were tickled with how it turned out. I&rsquo;m glad we got to remember Toby in a way that made them smile.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -2995,6 +3278,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>Greg and Becky started out as clients of mine and became friends. One night when Becky and I were together, we said, &ldquo;Let&rsquo;s write Greg a song.&rdquo; We started with where he was born and worked in the things that make him Greg. There&rsquo;s his big truck rolling down the road, his Mountain Dew, and of course his favorite girl, Becky.</p>
+          <p>We just thought it would be fun to give Greg a song of his own. That&rsquo;s how &ldquo;Greg&rsquo;s in His Prime&rdquo; came about.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -3064,6 +3352,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Surrounded by Love">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>The same night Becky and I wrote a song for Greg, we wrote &ldquo;Surrounded by Love&rdquo; about her. Becky was still in her teens when her mama passed away. This song is about the family who kept looking out for her and all the ways they&rsquo;ve made her feel loved over the years.</p>
+          <p>I wanted the song to capture how it feels for Becky to look around and see just how many people are in her corner.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3138,6 +3431,11 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>My friend Kelly and I were on a road trip when she took me to Julie&rsquo;s Place. She&rsquo;d been there before, and I could see why she wanted to go back. The food was good old-fashioned country cooking, and out on the porch there were reminders of how God had blessed Julie. The whole place made you feel welcome.</p>
+          <p>I wrote this little jingle to celebrate Julie and what she gives to her community. I wanted it to feel a little like stopping in for a meal and feeling right at home.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -3191,6 +3489,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within He&apos;ll Lead Me to You">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>Some nights when I&rsquo;m sitting alone, I get to wondering where my future husband might be. I don&rsquo;t know who he is or when we might meet, but I pray for him anyway. That&rsquo;s where this song came from.</p>
+          <p>I&rsquo;d love to have someone to share my life with. So I tell God what&rsquo;s on my heart, and I trust Him with the timing. If He has someone for me, I believe He&rsquo;ll bring us together when it&rsquo;s time.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3267,6 +3570,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Here Comes Your Bride">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote &ldquo;Here Comes Your Bride&rdquo; by imagining what it would feel like to walk down the aisle at this point in my life. I pictured looking at the man I was about to marry and getting to say, &ldquo;God brought us to this time and place together, forever by His grace.&rdquo; That&rsquo;s what I wanted to put into a song.</p>
+          <p>Maybe one day I&rsquo;ll get to play it at my own wedding. Maybe someone else will hear it and think, &ldquo;That&rsquo;s what I want to say on my wedding day, too.&rdquo;</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3354,6 +3662,10 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I wrote &ldquo;Sold by Sheri&rdquo; as a fun little jingle about what it&rsquo;s like to list your home with me. From putting the sign in the yard to getting through showings, going pending, and making it to closing day, I&rsquo;m there with you every step of the way. I wanted to put that into a tune you could sing along to. &ldquo;Sheri sold, Sheri, Sheri sold!&rdquo;</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -3406,6 +3718,10 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within Falbo Gets It Done">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote this little jingle about my friend and broker, Frank Falbo, to make everybody at work smile. I took the way Frank steps in and gets things moving when a house goes on the market and played it up a little. And with a name like Platinum Homes and Land, how could I resist a line about every deal he touches turning to platinum?</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3460,6 +3776,10 @@
           <span class="time dur">—:—</span>
         </div>
 
+        <template class="story">
+          <p>I live and work as a real estate agent in Ocala, the Horse Capital of the World. I thought it would be fun to write a little song about what it&rsquo;s like to live here. We have some beautiful horse farms, and I love that driving past them is just part of an ordinary day. That&rsquo;s a little bit of what makes Ocala feel like home to me.</p>
+        </template>
+
         <details class="sheet">
           <summary>Read the lyrics</summary>
           <div class="sheet-body">
@@ -3495,7 +3815,7 @@
       </div>
     </article>
 
-    <article class="entry" id="1774-ne-12th-street" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street">
+    <article class="entry" id="1774-ne-12th-street" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street" data-kind="listing">
       <span class="thumb"><img src="art/thumbs/1774-ne-12th-street.jpg" width="200" height="240" loading="lazy" style="object-position:center 18%" alt="Just Listed flyer for 1774 NE 12th Street"></span>
       <div class="body">
         <div class="row">
@@ -3516,6 +3836,10 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within 1774 NE 12th Street">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>I wrote this song for my listing at 1774 Northeast 12th Street. I thought it would be fun to introduce the property with a song of its own.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3567,6 +3891,11 @@
           <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within The Teapot Who Wanted to Fly">
           <span class="time dur">—:—</span>
         </div>
+
+        <template class="story">
+          <p>&ldquo;The Teapot Who Wanted to Fly&rdquo; started with a silly little idea. What if a teapot sat there pouring tea every day and wondered what it would be like to fly? It knew there was a whole world out there, and it wanted to see some of it for itself.</p>
+          <p>I wanted to write something fun for kids that would encourage them to dream a little bigger. Someday I&rsquo;d love to turn that little teapot&rsquo;s adventure into a children&rsquo;s book, too.</p>
+        </template>
 
         <details class="sheet">
           <summary>Read the lyrics</summary>
@@ -3643,6 +3972,108 @@
     </article>
   </section>
 
+  <section class="part" id="christmas">
+    <div class="part-head">
+      <h2>Christmas</h2>
+      <span class="count">For the holidays, and the One they&rsquo;re all about</span>
+    </div>
+
+    <article class="entry" id="whats-it-all-about" data-src="music/whats-it-all-about.mp3" data-title="What&rsquo;s It All About?">
+      <span class="thumb"><img src="art/thumbs/whats-it-all-about.jpg" width="240" height="240" loading="lazy" alt="Artwork for What&rsquo;s It All About?"></span>
+      <div class="body">
+        <div class="row">
+          <div class="titlewrap"><h3>What&rsquo;s It All About?</h3><p class="meta">Written November 5, 2026</p></div>
+          <button class="heart" type="button" aria-pressed="false" aria-label="Love What&rsquo;s It All About?">
+            <svg viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 14s-5.6-3.4-5.6-7.3A3 3 0 0 1 8 4.6a3 3 0 0 1 5.6 2.1C13.6 10.6 8 14 8 14z"/></svg>
+          </button>
+          <button class="share" type="button" aria-label="Share What&rsquo;s It All About?">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 10V1.8M5 4.6 8 1.6l3 3"/><path d="M5.2 7H3.6v7.4h8.8V7h-1.6"/></svg>
+          </button>
+          <button class="play" type="button" aria-label="Play What&rsquo;s It All About?">
+            <svg class="ic-play" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .92.5l9-5.8a.6.6 0 0 0 0-1l-9-5.8a.6.6 0 0 0-.92.5z"/></svg>
+            <svg class="ic-pause" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3.4" y="2.4" width="3.4" height="11.2" rx="0.7"/><rect x="9.2" y="2.4" width="3.4" height="11.2" rx="0.7"/></svg>
+          </button>
+        </div>
+        <div class="scrub">
+          <span class="time cur">0:00</span>
+          <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within What&rsquo;s It All About?">
+          <span class="time dur">—:—</span>
+        </div>
+
+        <template class="story">
+          <p>&ldquo;What&rsquo;s It All About?&rdquo; is about that moment just after Christmas when I look back at everything we did through Thanksgiving and Christmas. We put up the lights, cooked everybody&rsquo;s favorite foods, and made time to get together. So what&rsquo;s it all about?</p>
+          <p>To me, it&rsquo;s all about love. We show it by showing up, by making the dish we know somebody&rsquo;s been looking forward to, and by wanting to sit around together a little longer. That&rsquo;s what I wanted to put into this song.</p>
+        </template>
+
+        <details class="sheet">
+          <summary>Read the lyrics</summary>
+          <div class="sheet-body">
+            <img class="art" src="art/whats-it-all-about.jpg" width="1254" height="1254" loading="lazy"
+                 alt="Artwork for What&rsquo;s It All About?: a smiling woman with wavy gray hair in a red velvet jacket, arms open in welcome on a country porch at sunset, with a lit Christmas tree, a holiday feast on a plaid-covered table, a fire pit, and a poinsettia around her.">
+
+            <div class="lyrics">
+              <div class="stanza">
+                <p class="lab">Verse 1</p>
+                <p class="ly">Friday morning and the traffic is heavy<br>No sleeping in &rsquo;cause everybody&rsquo;s getting ready<br>Sales are going on, lights are going up<br>The trees are coming down and going in the trucks</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Refrain</p>
+                <p class="ly">What&rsquo;s it all about?</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Verse 2</p>
+                <p class="ly">Hot chocolate and bonfires are definitely on the list<br>Mistletoe is hung if you&rsquo;d like to be kissed<br>Dinner bell is ringing as the meat comes off the grill<br>The aroma is wonderfully familiar, and yet even still&hellip;</p>
+              </div>
+              <div class="stanza">
+                <p class="ly">What&rsquo;s it all about?</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Verse 3</p>
+                <p class="ly">Gathered in a circle, bowing our heads<br>Holding our hands, prayers being said<br>Where to begin? The feast is laid out<br>But the real question is, what&rsquo;s it all about?</p>
+              </div>
+              <div class="stanza">
+                <p class="ly">What&rsquo;s it all about?</p>
+              </div>
+              <div class="stanza">
+                <p class="lab">Chorus</p>
+                <p class="ly">Who cooked the food? Who started the fire?<br>The coffee is brewed to everyone&rsquo;s desire<br>What&rsquo;s it all about? It&rsquo;s not about the food<br>It&rsquo;s not about the fire, it&rsquo;s the love that we prove</p>
+              </div>
+              <div class="stanza">
+                <p class="ly">Who wrapped the gifts? Who strung every light?<br>Who stayed up late to make Christmas bright?<br>What&rsquo;s it all about? It&rsquo;s not about the food<br>It&rsquo;s not about the fire, it&rsquo;s the LOVE that we prove</p>
+              </div>
+              <div class="stanza">
+                <p class="ly epitaph">JESUS is &#10084;&#65039; LOVE &#10084;&#65039;</p>
+              </div>
+            </div>
+
+            <p class="credit">Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.</p>
+          </div>
+        </details>
+      </div>
+    </article>
+  </section>
+
+  <section class="books" id="books">
+    <div class="part-head">
+      <h2>Books by Sheri</h2>
+      <span class="count">Where the songs and the words meet</span>
+    </div>
+
+    <!-- A book is also introduced on the page of each song named in data-songs. -->
+    <article class="book" data-songs="all-about-that-faith">
+      <div class="book-cover" aria-hidden="true">
+        <span class="bc-title">Learning to Walk in Unwavering Faith</span>
+        <span class="bc-author">Sheryl Denise Long</span>
+      </div>
+      <div class="book-text">
+        <h3>Learning to Walk in Unwavering Faith</h3>
+        <p class="meta">A book by Sheryl Denise Long</p>
+        <p class="book-blurb">My book goes hand in hand with my song &ldquo;All About That Faith.&rdquo; More about it, and where to find it, coming soon.</p>
+        <p class="book-links">Available soon</p>
+      </div>
+    </article>
+  </section>
+
   <section class="write" id="write">
     <div class="part-head">
       <h2>Write to Sheri</h2>
@@ -3675,7 +4106,7 @@
 
 <footer>
   <div class="footer-inner">
-    <p class="sig">Sheryl Denise Long · Ocala, Florida</p>
+    <p class="sig">Sheryl Denise Long · Ocala, Florida · <a href="#books">Books</a> · <a href="/listings">Listing Songs</a></p>
     <p class="legal">Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.</p>
   </div>
 </footer>
@@ -3697,6 +4128,24 @@
 </div>
 
 <script>
+// Arrived with a song or section in the address (songsbysheri.com/#<id>, e.g.
+// from "Back to all songs"): scroll to it once the page has settled, and light
+// up a song.
+(function(){
+  var id = decodeURIComponent(location.hash.slice(1));
+  var el = id && document.getElementById(id);
+  if (!el) return;
+  var moved = false;
+  var mark = function(){ moved = true; };
+  window.addEventListener('wheel', mark, { passive: true, once: true });
+  window.addEventListener('touchmove', mark, { passive: true, once: true });
+  var go = function(){ if (!moved) el.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+  go();
+  if (el.classList.contains('entry')) el.classList.add('is-shared');
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+  window.addEventListener('load', go);
+})();
+
 (function(){
   var clock = function(s){
     if (!isFinite(s) || s < 0) return '—:—';
@@ -3984,12 +4433,35 @@
     }).catch(function(){});
   }
 
+  // Each song's title opens its own page (/songs/<id>); songs with a story get a link to it.
+  // Listing songs (data-kind="listing") all live on one page instead: /listings#<id>.
+  var songPath = function(el){ return el.dataset.kind === 'listing' ? '/listings#' + el.id : '/songs/' + el.id; };
+  [].forEach.call(document.querySelectorAll('.entry'), function(el){
+    var h = el.querySelector('h3');
+    if (h && !h.querySelector('a')){
+      var a = document.createElement('a');
+      a.className = 'songlink';
+      a.href = songPath(el);
+      while (h.firstChild) a.appendChild(h.firstChild);
+      h.appendChild(a);
+    }
+    if (el.querySelector('template.story')){
+      var s = document.createElement('a');
+      s.className = 'storylink';
+      s.href = el.dataset.kind === 'listing' ? songPath(el) : '/songs/' + el.id + '#story-h';
+      s.textContent = 'The story behind this song';
+      var sheet = el.querySelector('details.sheet');
+      if (sheet) sheet.parentNode.insertBefore(s, sheet);
+    }
+  });
+
   // Share: the phone's share sheet where there is one, otherwise copy the link.
   [].forEach.call(document.querySelectorAll('.entry'), function(el){
     var btn = el.querySelector('.share');
     if (!btn) return;
     btn.addEventListener('click', function(){
-      var url = location.origin + location.pathname.replace(/index\.html$/, '') + '#' + el.id;
+      // The song's own page, so link previews show its cover and title.
+      var url = location.origin + songPath(el);
       var title = el.dataset.title + ' — Songs by Sheri';
       if (navigator.share){
         navigator.share({ title: title, text: 'Listen to "' + el.dataset.title + '" by Sheryl Denise Long', url: url }).catch(function(){});
