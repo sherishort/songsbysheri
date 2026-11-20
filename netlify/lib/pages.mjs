@@ -61,6 +61,7 @@ export function findSong(html, id) {
     id,
     title: attr(open, 'data-title') || id,
     kind: attr(open, 'data-kind'),
+    video: attr(open, 'data-video'),
     src: attr(open, 'data-src'),
     section: secName ? { id: secId, name: secName.trim() } : null,
     meta: between(block, '<p class="meta">', '</p>'),
@@ -276,6 +277,8 @@ export function listingsPage(html, songs, origin) {
       </div>
     </div>
     ${song.photos ? `<div class="ls-photos">${fixSrc(song.photos)}</div>` : ''}
+    ${song.video ? `<video class="ls-video" controls playsinline preload="none" poster="/${esc(String(song.image || '').replace(/^\/+/, ''))}" src="/${esc(String(song.video).replace(/^\/+/, ''))}" aria-label="Video tour of ${t}"></video>
+    <p class="sp-hint">Watch the video tour, or just listen below.</p>` : ''}
     <div class="sp-player entry">
       <button class="play" type="button" aria-label="Play ${t}">${ICON.play}</button>
       <div class="sp-scrub scrub">

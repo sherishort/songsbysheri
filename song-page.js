@@ -176,6 +176,12 @@
   });
   });
 
+  // A listing's video tour and the songs' players take turns: one plays at a time.
+  [].forEach.call(document.querySelectorAll('video'), function(v){
+    players.push(v);
+    v.addEventListener('play', function(){ players.forEach(function(o){ if (o !== v && !o.paused) o.pause(); }); });
+  });
+
   // Listing Songs page opened at /listings#<id>: go to that song and light it up.
   var target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
   if (target && target.classList.contains('ls-item')){

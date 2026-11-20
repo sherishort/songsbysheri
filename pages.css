@@ -128,3 +128,4 @@
 .ls-photos img{ display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:6px; border:1px solid var(--rule); }
 .ls-item .sheet{ margin:0; }
 .ls-item.is-shared{ box-shadow:0 0 0 2px var(--gold); padding:1.2rem 1rem; animation:shared-glow 4.5s ease-out 1 both; }
+.ls-video{ display:block; width:100%; height:auto; aspect-ratio:16/9; background:#000; border-radius:8px; border:1px solid var(--rule); object-fit:contain; }
