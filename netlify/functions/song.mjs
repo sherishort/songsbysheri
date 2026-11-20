@@ -19,6 +19,8 @@ export default async (req, context) => {
 
   const song = findSong(html, id);
   if (!song) return Response.redirect(origin + '/', 302);
+  // Listing songs share one page instead of a page each.
+  if (song.kind === 'listing') return Response.redirect(origin + '/listings#' + id, 301);
 
   return new Response(songPage(html, song, origin), {
     headers: {

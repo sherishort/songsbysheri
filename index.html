@@ -3810,7 +3810,7 @@
       </div>
     </article>
 
-    <article class="entry" id="1774-ne-12th-street" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street">
+    <article class="entry" id="1774-ne-12th-street" data-src="music/1774-ne-12th-street.mp3" data-title="1774 NE 12th Street" data-kind="listing">
       <span class="thumb"><img src="art/thumbs/1774-ne-12th-street.jpg" width="200" height="240" loading="lazy" style="object-position:center 18%" alt="Just Listed flyer for 1774 NE 12th Street"></span>
       <div class="body">
         <div class="row">
@@ -4087,7 +4087,7 @@
 
 <footer>
   <div class="footer-inner">
-    <p class="sig">Sheryl Denise Long · Ocala, Florida · <a href="/about">About Sheri</a> · <a href="#books">Books</a></p>
+    <p class="sig">Sheryl Denise Long · Ocala, Florida · <a href="/about">About Sheri</a> · <a href="#books">Books</a> · <a href="/listings">Listing Songs</a></p>
     <p class="legal">Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.</p>
   </div>
 </footer>
@@ -4415,19 +4415,21 @@
   }
 
   // Each song's title opens its own page (/songs/<id>); songs with a story get a link to it.
+  // Listing songs (data-kind="listing") all live on one page instead: /listings#<id>.
+  var songPath = function(el){ return el.dataset.kind === 'listing' ? '/listings#' + el.id : '/songs/' + el.id; };
   [].forEach.call(document.querySelectorAll('.entry'), function(el){
     var h = el.querySelector('h3');
     if (h && !h.querySelector('a')){
       var a = document.createElement('a');
       a.className = 'songlink';
-      a.href = '/songs/' + el.id;
+      a.href = songPath(el);
       while (h.firstChild) a.appendChild(h.firstChild);
       h.appendChild(a);
     }
     if (el.querySelector('template.story')){
       var s = document.createElement('a');
       s.className = 'storylink';
-      s.href = '/songs/' + el.id + '#story-h';
+      s.href = el.dataset.kind === 'listing' ? songPath(el) : '/songs/' + el.id + '#story-h';
       s.textContent = 'The story behind this song';
       var sheet = el.querySelector('details.sheet');
       if (sheet) sheet.parentNode.insertBefore(s, sheet);
@@ -4440,7 +4442,7 @@
     if (!btn) return;
     btn.addEventListener('click', function(){
       // The song's own page, so link previews show its cover and title.
-      var url = location.origin + '/songs/' + el.id;
+      var url = location.origin + songPath(el);
       var title = el.dataset.title + ' — Songs by Sheri';
       if (navigator.share){
         navigator.share({ title: title, text: 'Listen to "' + el.dataset.title + '" by Sheryl Denise Long', url: url }).catch(function(){});

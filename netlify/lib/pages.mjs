@@ -60,6 +60,7 @@ export function findSong(html, id) {
   return {
     id,
     title: attr(open, 'data-title') || id,
+    kind: attr(open, 'data-kind'),
     src: attr(open, 'data-src'),
     section: secName ? { id: secId, name: secName.trim() } : null,
     meta: between(block, '<p class="meta">', '</p>'),
@@ -69,9 +70,19 @@ export function findSong(html, id) {
     height: artTag ? attr(artTag, 'height') : attr(thumbTag, 'height'),
     dedication: between(block, '<p class="dedication">', '</p>'),
     story: (between(block, '<template class="story">', '</template>') || '').trim() || null,
+    photos: (between(block, '<template class="photos">', '</template>') || '').trim() || null,
     lyrics: lyricsAt >= 0 ? block.slice(lyricsAt, creditAt > lyricsAt ? creditAt : undefined).trim() : null,
     credit: between(block, '<p class="credit">', '</p>'),
   };
+}
+
+// Every listing song (data-kind="listing" on its <article>), in page order.
+export function listingIds(html) {
+  const out = [];
+  const re = /<article class="entry" id="([^"]+)"[^>]*data-kind="listing"/g;
+  let m;
+  while ((m = re.exec(html))) out.push(m[1]);
+  return out;
 }
 
 // Books from the home page's Books section that belong with this song.
@@ -130,7 +141,7 @@ const topbar = (back, label) => `
 const footer = (legal) => `
 <footer>
   <div class="footer-inner">
-    <p class="sig"><a href="/">${SITE}</a> · <a href="/about">About Sheri</a> · <a href="/#books">Books</a></p>
+    <p class="sig"><a href="/">${SITE}</a> · <a href="/about">About Sheri</a> · <a href="/#books">Books</a> · <a href="/listings">Listing Songs</a></p>
     <p class="legal">${legal || 'Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.'}</p>
   </div>
 </footer>`;
@@ -161,7 +172,7 @@ export function songPage(html, song, origin) {
   return head({ html, origin, path, title, desc, image: song.image, width: song.width, height: song.height }) + `
 <body class="songpage">
 ${topbar(back, 'All songs')}
-<main class="sp" id="song" data-id="${song.id}" data-title="${esc(song.title)}" data-src="/${esc(String(song.src || '').replace(/^\/+/, ''))}" data-url="${url}">
+<main class="sp" id="song" data-song data-id="${song.id}" data-title="${esc(song.title)}" data-src="/${esc(String(song.src || '').replace(/^\/+/, ''))}" data-url="${url}">
 
   <div class="sp-cover">${song.art ? song.art.replace(/\ssrc="(?!\/|https?:)/, ' src="/').replace(' loading="lazy"', '') : ''}</div>
 
@@ -233,6 +244,92 @@ ${topbar(back, 'All songs')}
   </section>
 
   <p class="sp-more"><a href="${back}">&larr; Back to all the songs</a></p>
+</main>
+${footer()}
+<script src="/song-page.js" defer></script>
+</body>
+</html>
+`;
+}
+
+
+const fixSrc = (tag) => String(tag || '').replace(/\ssrc="(?!\/|https?:)/g, ' src="/');
+
+// One page holding all of Sheri's real estate listing songs: /listings
+// Each song has its own spot (and share link) at /listings#<song-id>.
+export function listingsPage(html, songs, origin) {
+  const path = '/listings';
+  const title = 'Listing Songs — ' + SITE;
+  const desc = esc('Songs ' + AUTHOR + ' wrote to introduce homes she has listed for sale.');
+  const first = songs[0] || {};
+
+  const card = (song) => {
+    const url = origin + path + '#' + song.id;
+    const t = esc(plain(song.title));
+    return `
+  <article class="ls-item" id="${song.id}" data-song data-id="${song.id}" data-title="${esc(song.title)}" data-src="/${esc(String(song.src || '').replace(/^\/+/, ''))}" data-url="${url}">
+    <div class="ls-top">
+      <div class="ls-art">${fixSrc(song.art)}</div>
+      <div class="ls-head">
+        <h2>${song.title}</h2>
+        ${song.meta ? `<p class="meta">${song.meta}</p>` : ''}
+      </div>
+    </div>
+    ${song.photos ? `<div class="ls-photos">${fixSrc(song.photos)}</div>` : ''}
+    <div class="sp-player entry">
+      <button class="play" type="button" aria-label="Play ${t}">${ICON.play}</button>
+      <div class="sp-scrub scrub">
+        <span class="time cur">0:00</span>
+        <input class="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek within ${t}">
+        <span class="time dur">—:—</span>
+      </div>
+      <button class="heart" type="button" aria-pressed="false" aria-label="Love ${t}">${ICON.heart}</button>
+    </div>
+    ${song.story ? `<div class="sp-story-body ls-story">${song.story}</div>` : ''}
+    <div class="sp-share-row">
+      <button class="sp-btn sp-native" type="button" hidden>${ICON.share}<span>Share</span></button>
+      <button class="sp-btn sp-copy" type="button">${ICON.link}<span>Copy link</span></button>
+      <a class="sp-btn" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}">${ICON.facebook}<span>Facebook</span></a>
+      <a class="sp-btn sp-sms" href="sms:?&amp;body=${encodeURIComponent('Listen to “' + plain(song.title) + '” by Sheri: ' + url)}">${ICON.text}<span>Text</span></a>
+      <a class="sp-btn" href="mailto:?subject=${encodeURIComponent(plain(song.title) + ' — a song by Sheri')}&amp;body=${encodeURIComponent('Have a listen to this song about the home at ' + plain(song.title) + ':\n\n' + url)}">${ICON.email}<span>Email</span></a>
+    </div>
+    ${song.lyrics ? `
+    <details class="sheet">
+      <summary>Read the lyrics</summary>
+      <div class="sheet-body">
+        ${song.lyrics}
+        ${song.credit ? `<p class="credit">${song.credit}</p>` : ''}
+      </div>
+    </details>` : ''}
+    <details class="sheet kind">
+      <summary>Leave a kind word</summary>
+      <div class="sheet-body">
+        <ul class="kind-list" hidden></ul>
+        <p class="kind-note sp-kind-empty" hidden>No kind words yet. Be the first!</p>
+        <form class="kind-form" novalidate>
+          <label for="kn-${song.id}">Your first name</label>
+          <input id="kn-${song.id}" name="name" maxlength="40" autocomplete="given-name" required>
+          <label for="km-${song.id}">Your kind word</label>
+          <textarea id="km-${song.id}" name="message" maxlength="500" required></textarea>
+          <div class="trap" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="foot"><span class="left">Sheri reads each one before it appears.</span><button type="submit">Send</button></div>
+        </form>
+      </div>
+    </details>
+  </article>`;
+  };
+
+  return head({ html, origin, path, title, desc, image: first.image, width: first.width, height: first.height }) + `
+<body class="listingspage">
+${topbar('/#ocala', 'All songs')}
+<main class="sp ls">
+  <div class="sp-head">
+    <span class="eyebrow">Sold by Sheri</span>
+    <h1>Listing Songs</h1>
+    <p class="sp-by">Songs I&rsquo;ve written to introduce homes I&rsquo;ve listed</p>
+  </div>
+  ${songs.map(card).join('\n')}
+  <p class="sp-more"><a href="/#ocala">&larr; Back to all the songs</a></p>
 </main>
 ${footer()}
 <script src="/song-page.js" defer></script>

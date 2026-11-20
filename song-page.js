@@ -1,16 +1,22 @@
-// Song page (/songs/<id>): player, heart, share buttons, print and kind words.
+// Song pages (/songs/<id>) and the Listing Songs page (/listings): player,
+// heart, share buttons, print and kind words for each [data-song] on the page.
 // Plays, hearts and kind words use the same private /api endpoints as the home page.
 (function(){
-  var page = document.getElementById('song');
-  if (!page) return;
-  var id = page.dataset.id, title = page.dataset.title, url = page.dataset.url;
-  var plainTitle = (function(){ var d = document.createElement('div'); d.innerHTML = title; return d.textContent; })();
+  var songs = [].slice.call(document.querySelectorAll('[data-song]'));
+  if (!songs.length) return;
 
   var store = {
     get: function(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
     set: function(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
   };
   var isOwner = store.get('sbs-owner') === '1';
+  var players = [];
+  var commentsReq = location.protocol === 'file:' ? Promise.resolve({}) :
+    fetch('/api/comments', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ return {}; });
+
+  songs.forEach(function(page){
+  var id = page.dataset.id, title = page.dataset.title, url = page.dataset.url;
+  var plainTitle = (function(){ var d = document.createElement('div'); d.innerHTML = title; return d.textContent; })();
   var record = function(type){
     if (isOwner || location.protocol === 'file:') return;
     try {
@@ -26,6 +32,7 @@
   var btn = box.querySelector('.play'), seek = box.querySelector('.seek');
   var cur = box.querySelector('.cur'), dur = box.querySelector('.dur');
   var audio = new Audio();
+  players.push(audio);
   audio.preload = 'metadata';
   audio.src = page.dataset.src;
   var dragging = false, played = false;
@@ -46,6 +53,7 @@
     if (isFinite(d) && d > 0){ seek.value = Math.round(audio.currentTime / d * 1000); paint(audio.currentTime / d); }
   });
   audio.addEventListener('play', function(){
+    players.forEach(function(o){ if (o !== audio && !o.paused) o.pause(); });
     box.classList.add('is-live', 'is-playing');
     btn.setAttribute('aria-label', 'Pause ' + plainTitle);
     if (!played){ played = true; record('play'); }
@@ -125,26 +133,26 @@
   if (print) print.addEventListener('click', function(){ window.print(); });
 
   // ── Kind words ──
-  var kind = page.querySelector('.sp-kind');
+  var kind = page.querySelector('.kind');
   var list = kind.querySelector('.kind-list'), empty = kind.querySelector('.sp-kind-empty');
   var form = kind.querySelector('form'), send = form.querySelector('button');
   var fmtDate = function(iso){
     try { return new Date(iso).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' }); }
     catch(e){ return ''; }
   };
-  if (location.protocol !== 'file:'){
-    fetch('/api/comments', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).then(function(bySong){
-      var items = (bySong && bySong[id]) || [];
-      if (!items.length){ empty.hidden = false; return; }
-      items.forEach(function(c){
-        var li = document.createElement('li');
-        var m = document.createElement('p'); m.className = 'msg'; m.textContent = c.message;
-        var w = document.createElement('p'); w.className = 'who'; w.textContent = '— ' + c.name + (c.created ? ', ' + fmtDate(c.created) : '');
-        li.appendChild(m); li.appendChild(w); list.appendChild(li);
-      });
-      list.hidden = false;
-    }).catch(function(){ empty.hidden = false; });
-  }
+  commentsReq.then(function(bySong){
+    var items = (bySong && bySong[id]) || [];
+    if (!items.length){ empty.hidden = false; return; }
+    var sum = kind.querySelector('summary');
+    if (sum) sum.textContent = 'Kind words (' + items.length + ')';
+    items.forEach(function(c){
+      var li = document.createElement('li');
+      var m = document.createElement('p'); m.className = 'msg'; m.textContent = c.message;
+      var w = document.createElement('p'); w.className = 'who'; w.textContent = '— ' + c.name + (c.created ? ', ' + fmtDate(c.created) : '');
+      li.appendChild(m); li.appendChild(w); list.appendChild(li);
+    });
+    list.hidden = false;
+  });
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var f = form.elements;
@@ -166,4 +174,14 @@
       form.querySelector('.left').textContent = 'That didn’t send. Please try again in a moment.';
     });
   });
+  });
+
+  // Listing Songs page opened at /listings#<id>: go to that song and light it up.
+  var target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target && target.classList.contains('ls-item')){
+    var go = function(){ target.scrollIntoView({ block: 'start', behavior: 'instant' }); };
+    go();
+    target.classList.add('is-shared');
+    window.addEventListener('load', go);
+  }
 })();
