@@ -394,6 +394,13 @@
   }
   .entry:target{ background:var(--leaf-raised); }
   .entry{ scroll-margin-top:1rem; }
+  /* A song someone opened from a shared link: a soft gold glow that fades. */
+  .entry.is-shared{ background:var(--leaf-raised); animation:shared-glow 4.5s ease-out 1 both; }
+  @keyframes shared-glow{
+    0%, 55%{ box-shadow:inset 0 0 0 2px var(--gold), 0 8px 26px -14px var(--shadow); }
+    100%   { box-shadow:inset 0 0 0 2px transparent, 0 1px 0 var(--rule); }
+  }
+  @media (prefers-reduced-motion: reduce){ .entry.is-shared{ animation:none; box-shadow:inset 0 0 0 2px var(--gold); } }
 
   .scrub{ display:flex; align-items:center; gap:0.7rem; }
   .time{
@@ -3857,6 +3864,25 @@
 </div>
 
 <script>
+// Opened from a shared song link (songsbysheri.com/song/<id>, or an older
+// songsbysheri.com/#<id> link): scroll to that song and light it up.
+(function(){
+  var tag = document.querySelector('meta[name="sbs-song"]');
+  var id = tag ? tag.content : decodeURIComponent(location.hash.slice(1));
+  var el = id && document.getElementById(id);
+  if (!el || !el.classList.contains('entry')) return;
+  if (tag && history.replaceState) history.replaceState(null, '', '/#' + id);
+  var moved = false;
+  var mark = function(){ moved = true; };
+  window.addEventListener('wheel', mark, { passive: true, once: true });
+  window.addEventListener('touchmove', mark, { passive: true, once: true });
+  var go = function(){ if (!moved) el.scrollIntoView({ block: 'start' }); };
+  go();
+  el.classList.add('is-shared');
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+  window.addEventListener('load', go);
+})();
+
 (function(){
   var clock = function(s){
     if (!isFinite(s) || s < 0) return '—:—';
@@ -4149,7 +4175,8 @@
     var btn = el.querySelector('.share');
     if (!btn) return;
     btn.addEventListener('click', function(){
-      var url = location.origin + location.pathname.replace(/index\.html$/, '') + '#' + el.id;
+      // Its own page, so link previews show this song's cover and title.
+      var url = location.origin + '/song/' + el.id;
       var title = el.dataset.title + ' — Songs by Sheri';
       if (navigator.share){
         navigator.share({ title: title, text: 'Listen to "' + el.dataset.title + '" by Sheryl Denise Long', url: url }).catch(function(){});
