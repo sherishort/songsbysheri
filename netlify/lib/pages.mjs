@@ -141,7 +141,7 @@ const topbar = (back, label) => `
 const footer = (legal) => `
 <footer>
   <div class="footer-inner">
-    <p class="sig"><a href="/">${SITE}</a> · <a href="/about">About Sheri</a> · <a href="/#books">Books</a> · <a href="/listings">Listing Songs</a></p>
+    <p class="sig"><a href="/">${SITE}</a> · <a href="/#books">Books</a> · <a href="/listings">Listing Songs</a></p>
     <p class="legal">${legal || 'Lyrics &copy; 2026 Sheryl Denise Long. All rights reserved.<br>Music generated with Suno, used under license.'}</p>
   </div>
 </footer>`;
