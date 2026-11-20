@@ -27,8 +27,10 @@
     } catch(e){}
   };
 
-  // ── Player ──
+  // ── Player and heart (a YouTube-only listing has neither) ──
   var box = page.querySelector('.sp-player');
+  if (box) (function(){
+  // ── Player ──
   var btn = box.querySelector('.play'), seek = box.querySelector('.seek');
   var cur = box.querySelector('.cur'), dur = box.querySelector('.dur');
   var audio = new Audio();
@@ -107,6 +109,8 @@
     if (on){ void heart.offsetWidth; heart.classList.add('pop'); }
     record(on ? 'heart' : 'unheart');
   });
+
+  })();
 
   // ── Share ──
   var flash = function(el, text){

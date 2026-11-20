@@ -62,11 +62,13 @@ export function findSong(html, id) {
     title: attr(open, 'data-title') || id,
     kind: attr(open, 'data-kind'),
     video: attr(open, 'data-video'),
+    youtube: attr(open, 'data-youtube'),
     src: attr(open, 'data-src'),
     section: secName ? { id: secId, name: secName.trim() } : null,
     meta: between(block, '<p class="meta">', '</p>'),
     art: artTag,
-    image: attr(artTag, 'src') || attr(thumbTag, 'src'),
+    image: attr(artTag, 'src') || attr(thumbTag, 'src')
+      || (attr(open, 'data-youtube') ? 'https://i.ytimg.com/vi/' + attr(open, 'data-youtube') + '/hqdefault.jpg' : null),
     width: artTag ? attr(artTag, 'width') : attr(thumbTag, 'width'),
     height: artTag ? attr(artTag, 'height') : attr(thumbTag, 'height'),
     dedication: between(block, '<p class="dedication">', '</p>'),
@@ -100,7 +102,8 @@ export function booksFor(html, id) {
 // The shared <head>: title, preview tags for Facebook/texts/email, styles.
 export function head({ html, origin, path, title, desc, image, width, height, extra = '' }) {
   const url = origin + path;
-  const img = image ? origin + '/' + String(image).replace(/^\/+/, '') : origin + '/sheri.webp';
+  const img = !image ? origin + '/sheri.webp'
+    : /^https?:/.test(image) ? image : origin + '/' + String(image).replace(/^\/+/, '');
   const w = image ? width : '1536', h = image ? height : '1024';
   return `<!DOCTYPE html>
 <html lang="en">
@@ -270,7 +273,7 @@ export function listingsPage(html, songs, origin) {
     return `
   <article class="ls-item" id="${song.id}" data-song data-id="${song.id}" data-title="${esc(song.title)}" data-src="/${esc(String(song.src || '').replace(/^\/+/, ''))}" data-url="${url}">
     <div class="ls-top">
-      <div class="ls-art">${fixSrc(song.art)}</div>
+      <div class="ls-art">${song.art ? fixSrc(song.art) : song.image ? `<img src="${esc(song.image)}" alt="">` : ''}</div>
       <div class="ls-head">
         <h2>${song.title}</h2>
         ${song.meta ? `<p class="meta">${song.meta}</p>` : ''}
@@ -279,7 +282,8 @@ export function listingsPage(html, songs, origin) {
     ${song.photos ? `<div class="ls-photos">${fixSrc(song.photos)}</div>` : ''}
     ${song.video ? `<video class="ls-video" controls playsinline preload="none" poster="/${esc(String(song.image || '').replace(/^\/+/, ''))}" src="/${esc(String(song.video).replace(/^\/+/, ''))}" aria-label="Video tour of ${t}"></video>
     <p class="sp-hint">Watch the video tour, or just listen below.</p>` : ''}
-    <div class="sp-player entry">
+    ${song.youtube ? `<div class="ls-yt"><iframe src="https://www.youtube-nocookie.com/embed/${esc(song.youtube)}?rel=0" title="${t} (video)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>` : ''}
+    ${song.src && !song.youtube ? `<div class="sp-player entry">
       <button class="play" type="button" aria-label="Play ${t}">${ICON.play}</button>
       <div class="sp-scrub scrub">
         <span class="time cur">0:00</span>
@@ -287,7 +291,7 @@ export function listingsPage(html, songs, origin) {
         <span class="time dur">—:—</span>
       </div>
       <button class="heart" type="button" aria-pressed="false" aria-label="Love ${t}">${ICON.heart}</button>
-    </div>
+    </div>` : ''}
     ${song.story ? `<div class="sp-story-body ls-story">${song.story}</div>` : ''}
     <div class="sp-share-row">
       <button class="sp-btn sp-native" type="button" hidden>${ICON.share}<span>Share</span></button>
