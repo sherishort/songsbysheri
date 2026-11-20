@@ -111,3 +111,4 @@
 .sp-story-body ul{ margin:0; padding-left:1.2rem; display:flex; flex-direction:column; gap:0.3rem; }
 .sp-story-body li{ font-family:'EB Garamond', Georgia, serif; font-size:1.1rem; line-height:1.5; color:var(--ink-soft); }
 .sp-story-body li::marker{ color:var(--gold-stamp); }
+.sp-story-body a{ color:var(--gold); text-decoration-thickness:1px; text-underline-offset:3px; }
